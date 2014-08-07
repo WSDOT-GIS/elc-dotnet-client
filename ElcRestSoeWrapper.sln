@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElcRestSoeWrapper", "ElcRestSoeWrapper\ElcRestSoeWrapper.csproj", "{5642A9F8-AECF-40E3-93BB-7F69AB9BE7A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElcContracts", "Data Contracts\ElcContracts\ElcContracts.csproj", "{518E9E65-16AD-4E53-8F36-C83BADE44830}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeometryContracts", "Data Contracts\GeometryContracts\GeometryContracts.csproj", "{A11733D2-5846-4AD5-B5A7-B8AA672BE307}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WrapperTest", "WrapperTest\WrapperTest.csproj", "{468FBE3B-B516-4294-8B29-AA29D0E81000}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{057AA9E0-E35F-4B86-8D54-7AB778116C93}"
+	ProjectSection(SolutionItems) = preProject
+		ElcRestSoeWrapper.vsmdi = ElcRestSoeWrapper.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = ElcRestSoeWrapper.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5642A9F8-AECF-40E3-93BB-7F69AB9BE7A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5642A9F8-AECF-40E3-93BB-7F69AB9BE7A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5642A9F8-AECF-40E3-93BB-7F69AB9BE7A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5642A9F8-AECF-40E3-93BB-7F69AB9BE7A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{518E9E65-16AD-4E53-8F36-C83BADE44830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{518E9E65-16AD-4E53-8F36-C83BADE44830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{518E9E65-16AD-4E53-8F36-C83BADE44830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{518E9E65-16AD-4E53-8F36-C83BADE44830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A11733D2-5846-4AD5-B5A7-B8AA672BE307}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A11733D2-5846-4AD5-B5A7-B8AA672BE307}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A11733D2-5846-4AD5-B5A7-B8AA672BE307}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A11733D2-5846-4AD5-B5A7-B8AA672BE307}.Release|Any CPU.Build.0 = Release|Any CPU
+		{468FBE3B-B516-4294-8B29-AA29D0E81000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{468FBE3B-B516-4294-8B29-AA29D0E81000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{468FBE3B-B516-4294-8B29-AA29D0E81000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{468FBE3B-B516-4294-8B29-AA29D0E81000}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

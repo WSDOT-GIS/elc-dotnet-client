@@ -1,0 +1,25 @@
+﻿AR Alternate Route
+CO Couplet
+CD Collector Distributor (Decreasing)
+CI Collector Distributor (Increasing)
+FD Frontage Road (Decreasing)
+FI Frontage Road (Increasing)
+FS Ferry Ship (Boat)
+FT Ferry Terminal
+HI Grade-Separated HOV (Increasing)
+HD Grade-Separated HOV (Decreasing)
+LX Crossroad within Interchange
+PR Proposed Route
+PU Extension of P ramp
+P[1-9] Off Ramp (Increasing)
+QU Extension of Q ramp
+Q[1-9] On Ramp (Increasing)
+RL Reversible Lane
+RU Extension ofRRamp
+R[1-9] Off Ramp (Decreasing)
+SP Spur
+SU Extension of S ramp
+S[1-9] On Ramp (Decreasing)
+TB Transitional Turnback
+TR Temporary Route
+FU Future
