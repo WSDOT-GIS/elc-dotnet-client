@@ -6,6 +6,7 @@ using Wsdot.Elc.Contracts.Properties;
 
 namespace Wsdot.Elc.Contracts
 {
+	using System;
 	using RrtDict = Dictionary<Regex, string>;
 
 	/// <summary>
@@ -153,7 +154,7 @@ namespace Wsdot.Elc.Contracts
 		/// </returns>
 		public static string GetRrtDescription(this string rrt)
 		{
-			if (string.IsNullOrEmpty(rrt) || string.Compare(rrt, "ML", true) == 0)
+			if (string.IsNullOrEmpty(rrt) || string.Compare(rrt, "ML", StringComparison.InvariantCultureIgnoreCase) == 0)
 			{
 				return "Mainline";
 			}

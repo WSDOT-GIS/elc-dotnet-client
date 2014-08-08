@@ -123,10 +123,10 @@ namespace Wsdot.Elc.Contracts
 			if (obj != null || obj.GetType() == typeof(ElcSettings))
 			{
 				var other = (ElcSettings)obj;
-				return string.Compare(this.Url, other.Url) == 0
-					&& string.Compare(this.FindNearestRouteLocationOperationName, other.FindNearestRouteLocationOperationName) == 0
-					&& string.Compare(this.FindRouteLocationOperationName, other.FindRouteLocationOperationName) == 0
-					&& string.Compare(this.RoutesResourceName, other.RoutesResourceName) == 0;
+				return string.Compare(this.Url, other.Url, StringComparison.InvariantCulture) == 0
+					&& string.Compare(this.FindNearestRouteLocationOperationName, other.FindNearestRouteLocationOperationName, StringComparison.InvariantCulture) == 0
+					&& string.Compare(this.FindRouteLocationOperationName, other.FindRouteLocationOperationName, StringComparison.InvariantCulture) == 0
+					&& string.Compare(this.RoutesResourceName, other.RoutesResourceName, StringComparison.InvariantCulture) == 0;
 			}
 			return base.Equals(obj);
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Runtime.Serialization;
 using Wsdot.Geometry.Contracts;
 
@@ -242,7 +243,7 @@ namespace Wsdot.Elc.Contracts
 
 		private static string DateToString(DateTime? date)
 		{
-			return date.HasValue && date.Value > DateTime.MinValue ? date.Value.ToShortDateString() : null;
+			return date.HasValue && date.Value > DateTime.MinValue ? date.Value.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern) : null;
 		}
 	}
 }

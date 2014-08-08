@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -253,7 +254,7 @@ namespace Wsdot.Elc.Wrapper
 			var parameters = new Dictionary<string, string>();
 			parameters.Add("f", "json");
 			parameters.Add("locations", locations.ToJson());
-			parameters.Add("referenceDate", referenceDate.HasValue ? referenceDate.Value.ToShortDateString() : string.Empty);
+			parameters.Add("referenceDate", referenceDate.HasValue ? referenceDate.Value.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern) : string.Empty);
 			if (outSR != null)
 			{
 				parameters.Add("outSR", outSR.ToString());
@@ -388,7 +389,7 @@ namespace Wsdot.Elc.Wrapper
 			var parameters = new Dictionary<string, string>();
 			parameters.Add("f", "json");
 			parameters.Add("coordinates", serializer.Serialize(coordinates));
-			parameters.Add("referenceDate", referenceDate.ToShortDateString());
+			parameters.Add("referenceDate", referenceDate.ToString(CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern));
 			parameters.Add("searchRadius", searchRadius.ToString());
 			if (inSR != null)
 			{
@@ -471,7 +472,7 @@ namespace Wsdot.Elc.Wrapper
 
 				if ((routeInfo.LrsTypes & LrsTypes.Increase) == LrsTypes.Increase)
 				{
-					layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Increase", true) == 0);
+					layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Increase", StringComparison.InvariantCultureIgnoreCase) == 0);
 					if (layerInfo != null)
 					{
 						url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
@@ -480,7 +481,7 @@ namespace Wsdot.Elc.Wrapper
 				}
 				if ((routeInfo.LrsTypes & LrsTypes.Decrease) == LrsTypes.Decrease)
 				{
-					layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Decrease", true) == 0);
+					layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Decrease", StringComparison.InvariantCultureIgnoreCase) == 0);
 					if (layerInfo != null)
 					{
 						url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
@@ -489,7 +490,7 @@ namespace Wsdot.Elc.Wrapper
 				}
 				if ((routeInfo.LrsTypes & LrsTypes.Ramp) == LrsTypes.Ramp)
 				{
-					layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Ramp", true) == 0);
+					layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Ramp", StringComparison.InvariantCultureIgnoreCase) == 0);
 					if (layerInfo != null)
 					{
 						url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
