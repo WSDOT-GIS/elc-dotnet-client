@@ -64,6 +64,21 @@ namespace Wsdot.Elc.Wrapper
 		}
 
 		/// <summary>
+		/// Deserializes a JSON string into a set of <see cref="RouteLocation"/>s
+		/// </summary>
+		/// <typeparam name="T">A type that implements an <see cref="IEnumerable&lt;T&gt;"/> of <see cref="RouteLocation"/>.</typeparam>
+		/// <param name="json">A JSON representation of an array of <see cref="RouteLocation"/> objects.</param>
+		/// <returns>An <see cref="IEnumerable&lt;T&gt;"/> of <see cref="RouteLocation"/></returns>
+		public static T ToRouteLocations<T>(this Stream json) where T : class, IEnumerable<RouteLocation>
+		{
+			var serializer = new DataContractJsonSerializer(typeof(T));
+
+			T locations = serializer.ReadObject(json) as T;
+
+			return locations;
+		}
+
+		/// <summary>
 		/// Converts a dictionary into a query string.
 		/// </summary>
 		/// <param name="parameters">A dictionary with string keys and string values.</param>
