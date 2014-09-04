@@ -18,7 +18,7 @@ namespace Wsdot.Elc.Wrapper
 	/// </summary>
 	public partial class ElcWrapper
 	{
-		const string _defaultUrl = "http://wsdot.wa.gov/geosvcs/ArcGIS/rest/services/Shared/ElcRestSoe/MapServer/exts/ElcRestSoe";
+		const string _defaultUrl = "http://www.wsdot.wa.gov/geoservices/arcgis/rest/services/Shared/ElcRestSOE/MapServer/exts/ElcRestSoe";
 		const string _mapServiceUrlRe = @"(?i)^(.+)/exts/.+$";
 		const string _defaultFindRouteLocationOperationName = "Find Route Locations";
 		const string _defaultFindNearestRouteLocationsOperationName = "Find Nearest Route Locations";
@@ -456,11 +456,11 @@ namespace Wsdot.Elc.Wrapper
 			Dictionary<LrsTypes, PolylineContract> output = new Dictionary<LrsTypes,PolylineContract>(2);
 
 			/*
-			 * http://wsdot.wa.gov/geosvcs/ArcGIS/rest/services/Shared/ElcRestSoe/MapServer/1/query?text=&where=SR+%3D+%27005%27&returnGeometry=true&maxAllowableOffset=&outSR=&f=json
+			 * http://wsdot.wa.gov/geosvcs/ArcGIS/rest/services/Shared/ElcRestSoe/MapServer/1/query?text=&where=RouteID+%3D+%27005%27&returnGeometry=true&maxAllowableOffset=&outSR=&f=json
 			 */
 
 			// Create the format string for the web requests.
-			string fmt = string.Format("{0}/{{0}}/query?where=SR+%3D+%27{{1}}%27&returnGeometry=true&outSR={1}&f=json", 
+			string fmt = string.Format("{0}/{{0}}/query?where=RouteID+%3D+%27{{1}}%27&returnGeometry=true&outSR={1}&f=json", 
 				this.MapServerUrl, outSR.HasValue ? outSR.Value.ToString() : string.Empty);
 
 			string iJson = null, dJson = null, rJson = null;

@@ -13,7 +13,7 @@ namespace WrapperTest
 	[TestClass]
 	public class ElcWrapperUnitTest
 	{
-		const string _defaultUrl = "http://wsdot.wa.gov/geosvcs/ArcGIS/rest/services/Shared/ElcRestSoe/MapServer/exts/ElcRestSoe";
+		const string _defaultUrl = "http://www.wsdot.wa.gov/geoservices/arcgis/rest/services/Shared/ElcRestSOE/MapServer/exts/ElcRestSoe";
 		const string _defaultFindRouteLocationsOperationName = "Find Route Locations";
 		const string _defaultFindNearestRouteLocationsOperationName = "Find Nearest Route Locations";
 
