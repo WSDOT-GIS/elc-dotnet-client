@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text.RegularExpressions;
-using System.Web.Script.Serialization;
+using System.Threading.Tasks;
 using Wsdot.Elc.Contracts;
 using Wsdot.Geometry.Contracts;
 
@@ -69,53 +70,94 @@ namespace Wsdot.Elc.Wrapper
 			{
 				if (_routes == null)
 				{
-					UriBuilder uriB = new UriBuilder(string.Format("{0}/{1}", this.Url, this.RoutesResoureName));
-					uriB.Query = "f=json";
-					var reqest = (HttpWebRequest)HttpWebRequest.Create(uriB.Uri);
-					var response = (HttpWebResponse)reqest.GetResponse();
-					var stream = response.GetResponseStream();
-
-					string json;
-
-					using (var reader = new StreamReader(stream))
-					{
-						json = reader.ReadToEnd();
-					}
-
-					_routes = JsonToRouteInfoDict(json);
+					GetRoutesAsync().Wait();
 				}
 				return _routes;
 			}
 		}
 
+		/// <summary>
+		/// Asynchonous alternative to <see cref="ElcWrapper.Routes"/>.
+		/// </summary>
+		/// <returns></returns>
+		public async Task<Dictionary<string, List<RouteInfo>>> GetRoutesAsync()
+		{
+			if (_routes == null)
+			{
+
+				return await GetRouteDict().ContinueWith(t => _routes = t.Result);
+			}
+			else
+			{
+				return _routes;
+			}
+		}
+
+		private async Task<Dictionary<string, List<RouteInfo>>> GetRouteDict()
+		{
+			UriBuilder uriB = new UriBuilder(string.Format("{0}/{1}", this.Url, this.RoutesResoureName));
+			uriB.Query = "f=json";
+
+			using (var httpClient = new HttpClient())
+			using (var stream = await httpClient.GetStreamAsync(uriB.Uri))
+			{
+				return await JsonToRouteInfoDict(stream);
+			}
+		}
+
 		private  MapServerInfo _mapServerInfo;
 
+		/// <summary>
+		/// Information about the ELC Map Service.
+		/// </summary>
 		public MapServerInfo MapServerInfo
 		{
 			get
 			{
 				if (_mapServerInfo == null)
 				{
-					var url = this.MapServerUrl;
-					url += "?f=json";
-
-					string json;
-
-					using (var c = new WebClient())
-					{
-						json = c.DownloadString(url);
-					}
-
-					_mapServerInfo = JsonConvert.DeserializeObject<MapServerInfo>(json, new JsonSerializerSettings
-					{
-						MissingMemberHandling = MissingMemberHandling.Ignore
-					});
-
+					GetMapServerInfoAsync().Wait();
 				}
 				return _mapServerInfo;
 			}
 		}
 
+		/// <summary>
+		/// Gets information about the ELC map service.
+		/// </summary>
+		/// <returns>Returns the information about the map service.</returns>
+		/// <remarks>
+		/// An HTTP request will only be made the first time this function is called. 
+		/// The response is cached for all future requests for the lifetime of the <see cref="ElcWrapper"/>.
+		/// </remarks>
+		public async Task<MapServerInfo> GetMapServerInfoAsync()
+		{
+			if (_mapServerInfo == null)
+			{
+				var url = this.MapServerUrl;
+				url += "?f=json";
+
+				using (var c = new HttpClient())
+				using (var stream = await c.GetStreamAsync(url))
+				using (var sr = new StreamReader(stream))
+				using (var jr = new JsonTextReader(sr))
+				{
+					var js = JsonSerializer.Create(new JsonSerializerSettings
+					{
+						MissingMemberHandling = MissingMemberHandling.Ignore
+					});
+					_mapServerInfo = await Task.Run(() =>
+					{
+						return js.Deserialize<MapServerInfo>(jr);
+					});
+				}
+			}
+			return _mapServerInfo;
+		}
+
+		/// <summary>
+		/// An array of <see cref="LayerInfo"/> objects. These are the LRS layers of the ELC map service.
+		/// </summary>
 		public LayerInfo[] Layers
 		{
 			get
@@ -127,10 +169,20 @@ namespace Wsdot.Elc.Wrapper
 		/// <summary>
 		/// Deserializes a JSON string into a dictionary of route information.
 		/// </summary>
-		/// <param name="json"></param>
+		/// <param name="stream">A stream of JSON text representing route info</param>
 		/// <returns></returns>
-		private static Dictionary<string, List<RouteInfo>> JsonToRouteInfoDict(string json) {
-			var intDict = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, int>>>(json);
+		private async static Task<Dictionary<string, List<RouteInfo>>> JsonToRouteInfoDict(Stream stream)
+		{
+			Dictionary<string, Dictionary<string, int>> intDict;
+
+			var serializer = new JsonSerializer();
+			using (var sReader = new StreamReader(stream))
+			using (var jReader = new JsonTextReader(sReader))
+			{
+				intDict = await Task.Run(() => {
+					return serializer.Deserialize<Dictionary<string, Dictionary<string, int>>>(jReader);
+				});
+			}
 
 			return intDict.ToDictionary(
 				kvp => kvp.Key,
@@ -202,53 +254,9 @@ namespace Wsdot.Elc.Wrapper
 		/// </param>
 		/// <param name="lrsYear">A string indicating the LRS publication year.  If omitted, the current year's LRS will be used.</param>
 		/// <returns>An array of <see cref="RouteLocation"/> objects.</returns>
-		private RouteLocation[] FindRouteLocations(IEnumerable<RouteLocation> locations, DateTime? referenceDate, object outSR, string lrsYear)
+		private async Task<RouteLocation[]> FindRouteLocationsAsync(IEnumerable<RouteLocation> locations, DateTime? referenceDate, object outSR, string lrsYear)
 		{
 
-			WebRequest request;
-			byte[] bytes;
-			CreateFindRouteLocatoinsWebReqestAndParameterBytes(locations, referenceDate, outSR, lrsYear, out request, out bytes);
-
-
-			Stream str = null;
-
-			try
-			{
-				request.ContentLength = bytes.Length; // Count the bytes to be sent.
-				str = request.GetRequestStream();
-				str.Write(bytes, 0, bytes.Length);  // Send the request.
-			}
-			finally
-			{
-				if (str != null)
-				{
-					str.Close();
-				}
-			}
-
-			string jsonResults;
-
-			// Get the response.
-			WebResponse response = request.GetResponse();
-			if (response != null)
-			{
-				using (var streamReader = new StreamReader(response.GetResponseStream()))
-				{
-					jsonResults = streamReader.ReadToEnd();
-				}
-			}
-			else
-			{
-				return null;
-			}
-
-			// Deserialize the response
-			return jsonResults.ToRouteLocations<RouteLocation[]>();
-		}
-
-		private void CreateFindRouteLocatoinsWebReqestAndParameterBytes(IEnumerable<RouteLocation> locations, DateTime? referenceDate, 
-			object outSR, string lrsYear, out WebRequest request, out byte[] bytes)
-		{
 			// Build the query string.
 			var parameters = new Dictionary<string, string>();
 			parameters.Add("f", "json");
@@ -262,13 +270,71 @@ namespace Wsdot.Elc.Wrapper
 			{
 				parameters.Add("lrsYear", lrsYear);
 			}
+			
+			byte[] parametersBytes = parameters.ToQueryStringBytes();
 
 			var builder = new UriBuilder(this.Url + "/" + this.FindRouteLocationsOperationName);
 
-			request = WebRequest.Create(builder.Uri);
-			request.ContentType = "application/x-www-form-urlencoded";
-			request.Method = "POST";
-			bytes = parameters.ToQueryStringBytes();
+			RouteLocation[] output = null;
+
+			using (var client = new HttpClient())
+			using (var httpContent = new FormUrlEncodedContent(parameters))
+			{
+				// TODO: Use Json.Net serializer instead of built-in .NET serializer. This will require custom converters.
+
+				using (var httpResponseMessage = await client.PostAsync(builder.Uri, httpContent))
+				using (var stream = await httpResponseMessage.Content.ReadAsStreamAsync())
+				////using (var streamReader = new StreamReader(stream))
+				////using (var jsonReader = new JsonTextReader(streamReader))
+				{
+					////var jsonSerializer = JsonSerializer.CreateDefault();
+					////output = jsonSerializer.Deserialize<RouteLocation[]>(jsonReader);
+
+					output = await Task.Run(() => stream.ToRouteLocations<RouteLocation[]>());
+				}
+			}
+
+			return output;
+		}
+
+				/// <summary>
+		/// Finds route locations on the WSDOT Linear Referencing System (LRS).
+		/// </summary>
+		/// <param name="locations">A collection of <see cref="RouteLocation"/>s.</param>
+		/// <param name="referenceDate">
+		/// The date that the <paramref name="locations"/> were collected.  
+		/// This parameter can be omitted if EACH item in <paramref name="locations"/>
+		/// has a value for its <see cref="RouteLocation.ReferenceDate"/>.
+		/// </param>
+		/// <param name="outSR">
+		/// Either a WKID <see cref="int"/> or a WKT <see cref="string"/> of the spatial reference to use with the output geometry.
+		/// If omitted, the spatial reference of the LRS will be used.  (As of this writing, <see href="http://spatialreference.org/ref/epsg/2927/">2927</see>.)
+		/// </param>
+		/// <param name="lrsYear">A string indicating the LRS publication year.  If omitted, the current year's LRS will be used.</param>
+		/// <returns>An array of <see cref="RouteLocation"/> objects.</returns>
+		public async Task<RouteLocation[]> FindRouteLocationsAsync(IEnumerable<RouteLocation> locations, DateTime? referenceDate, int? outSR, string lrsYear)
+		{
+			return await FindRouteLocationsAsync(locations, referenceDate, outSR as object, lrsYear);
+		}
+
+						/// <summary>
+		/// Finds route locations on the WSDOT Linear Referencing System (LRS).
+		/// </summary>
+		/// <param name="locations">A collection of <see cref="RouteLocation"/>s.</param>
+		/// <param name="referenceDate">
+		/// The date that the <paramref name="locations"/> were collected.  
+		/// This parameter can be omitted if EACH item in <paramref name="locations"/>
+		/// has a value for its <see cref="RouteLocation.ReferenceDate"/>.
+		/// </param>
+		/// <param name="outSR">
+		/// Either a WKID <see cref="int"/> or a WKT <see cref="string"/> of the spatial reference to use with the output geometry.
+		/// If omitted, the spatial reference of the LRS will be used.  (As of this writing, <see href="http://spatialreference.org/ref/epsg/2927/">2927</see>.)
+		/// </param>
+		/// <param name="lrsYear">A string indicating the LRS publication year.  If omitted, the current year's LRS will be used.</param>
+		/// <returns>An array of <see cref="RouteLocation"/> objects.</returns>
+		public async Task<RouteLocation[]> FindRouteLocationsAsync(IEnumerable<RouteLocation> locations, DateTime? referenceDate, string outSR, string lrsYear)
+		{
+			return await FindRouteLocationsAsync(locations, referenceDate, outSR as object, lrsYear);
 		}
 
 		/// <summary>
@@ -286,9 +352,14 @@ namespace Wsdot.Elc.Wrapper
 		/// </param>
 		/// <param name="lrsYear">A string indicating the LRS publication year.  If omitted, the current year's LRS will be used.</param>
 		/// <returns>An array of <see cref="RouteLocation"/> objects.</returns>
+		[Obsolete("Use FindRouteLocationsAsync instead.")]
 		public RouteLocation[] FindRouteLocations(IEnumerable<RouteLocation> locations, DateTime? referenceDate, int? outSR, string lrsYear)
 		{
-			return FindRouteLocations(locations, referenceDate, outSR as object, lrsYear);
+			RouteLocation[] output = null;
+			FindRouteLocationsAsync(locations, referenceDate, outSR as object, lrsYear).ContinueWith(f => {
+				output = f.Result;
+			}).Wait();
+			return output;
 		}
 
 		/// <summary>
@@ -306,9 +377,84 @@ namespace Wsdot.Elc.Wrapper
 		/// </param>
 		/// <param name="lrsYear">A string indicating the LRS publication year.  If omitted, the current year's LRS will be used.</param>
 		/// <returns>An array of <see cref="RouteLocation"/> objects.</returns>
+		[Obsolete("Use FindRouteLocationsAsync instead.")]
 		public RouteLocation[] FindRouteLocations(IEnumerable<RouteLocation> locations, DateTime? referenceDate, string outSR, string lrsYear)
 		{
-			return FindRouteLocations(locations, referenceDate, outSR as object, lrsYear);
+			RouteLocation[] output = null;
+			FindRouteLocationsAsync(locations, referenceDate, outSR as object, lrsYear).ContinueWith(f => {
+				output = f.Result;
+			}).Wait();
+			return output;
+		}
+
+		/// <summary>
+		/// Returns route locations closest to a given set of point coordinates.
+		/// </summary>
+		/// <param name="coordinates">
+		/// An array of <see cref="double"/> values.  Values at even indexes are X coordinates, odd are Y coordinates.
+		/// I.e., the first point is represented by items 0 and 1, the second by 2 and 3, etc.
+		/// </param>
+		/// <param name="referenceDate">The date that the <paramref name="coordinates"/> were collected.</param>
+		/// <param name="searchRadius">The maximum distance in feet around each of the <paramref name="coordinates"/> to search for a route.</param>
+		/// <param name="inSR">
+		/// The spatial reference corresponding to <paramref name="coordinates"/>.  This value should be either a WKID <see cref="int"/> or a WKT <see cref="string"/>.
+		/// </param>
+		/// <param name="outSR">
+		/// The spatial reference system to use in the output <see cref="RouteLocation"/> objects.
+		/// This value should be either a WKID <see cref="int"/> or a WKT <see cref="string"/>.
+		/// </param>
+		/// <param name="lrsYear">Specifies which LRS to use.</param>
+		/// <param name="routeFilter">
+		/// A partial SQL query that can be used to limit which routes are searched.  This value is optional.
+		/// <example>
+		/// <list type="bullet">
+		/// <item><description><c>LIKE '005%'</c></description></item>
+		/// <item><description><c>= '005'</c></description></item>
+		/// </list>
+		/// </example>
+		/// </param>
+		/// <returns>An array of <see cref="RouteLocation"/> objects.</returns>
+		public async Task<RouteLocation[]> FindNearestRouteLocationsAsync(IEnumerable<double> coordinates, DateTime referenceDate, double searchRadius,
+			object inSR, object outSR, string lrsYear, string routeFilter = null)
+		{
+
+			// Build the query string.
+			var parameters = new Dictionary<string, string>();
+			parameters.Add("f", "json");
+			parameters.Add("coordinates", JsonConvert.SerializeObject(coordinates));
+			parameters.Add("referenceDate", referenceDate.ToShortDateString());
+			parameters.Add("searchRadius", searchRadius.ToString());
+			if (inSR != null)
+			{
+				parameters.Add("inSR", inSR.ToString());
+			}
+			if (outSR != null)
+			{
+				parameters.Add("outSR", outSR.ToString());
+			}
+			if (!string.IsNullOrEmpty(lrsYear))
+			{
+				parameters.Add("lrsYear", lrsYear);
+			}
+			if (!string.IsNullOrEmpty(routeFilter))
+			{
+				parameters.Add("routeFilter", routeFilter);
+			}
+
+			UriBuilder builder = new UriBuilder(this.Url + "/" + this.FindNearestRouteLocationsOperationName);
+
+			RouteLocation[] routeLocations = null;
+
+			using (var httpClient = new HttpClient())
+			using (var httpContent = new FormUrlEncodedContent(parameters))
+			using (var httpResponse = await httpClient.PostAsync(builder.Uri, httpContent))
+			using (var stream = await httpResponse.Content.ReadAsStreamAsync())
+			{
+				
+				routeLocations = await Task.Run(() => stream.ToRouteLocations<RouteLocation[]>());
+			}
+
+			return routeLocations;
 		}
 
 
@@ -340,80 +486,15 @@ namespace Wsdot.Elc.Wrapper
 		/// </example>
 		/// </param>
 		/// <returns>An array of <see cref="RouteLocation"/> objects.</returns>
+		[Obsolete("Use FindNearestRouteLocationsAsync instead.")]
 		public RouteLocation[] FindNearestRouteLocations(IEnumerable<double> coordinates, DateTime referenceDate, double searchRadius, 
 			object inSR, object outSR, string lrsYear, string routeFilter = null)
 		{
-			WebRequest request;
-			byte[] bytes;
-			CreateFindNearestRouteLocationsWebRequest(coordinates, referenceDate, searchRadius, inSR, outSR, lrsYear, routeFilter, out request, out bytes);
-
-
-			Stream str = null;
-
-			try
-			{
-				str = request.GetRequestStream();
-				str.Write(bytes, 0, bytes.Length);  // Send the request.
-			}
-			finally
-			{
-				if (str != null)
-				{
-					str.Close();
-				}
-			}
-
-			string jsonResults = null;
-
-			// Get the response.
-			using (WebResponse response = request.GetResponse())
-			{
-				if (response != null)
-				{
-					using (var streamReader = new StreamReader(response.GetResponseStream()))
-					{
-						jsonResults = streamReader.ReadToEnd();
-					}
-				}
-			}
-
-			// Deserialize the response
-			return jsonResults == null ? null : jsonResults.ToRouteLocations<RouteLocation[]>();
-		}
-
-		private void CreateFindNearestRouteLocationsWebRequest(IEnumerable<double> coordinates, DateTime referenceDate, double searchRadius, object inSR, object outSR, string lrsYear, string routeFilter, out WebRequest request, out byte[] bytes)
-		{
-			JavaScriptSerializer serializer = new JavaScriptSerializer();
-			// Build the query string.
-			var parameters = new Dictionary<string, string>();
-			parameters.Add("f", "json");
-			parameters.Add("coordinates", serializer.Serialize(coordinates));
-			parameters.Add("referenceDate", referenceDate.ToShortDateString());
-			parameters.Add("searchRadius", searchRadius.ToString());
-			if (inSR != null)
-			{
-				parameters.Add("inSR", inSR.ToString());
-			}
-			if (outSR != null)
-			{
-				parameters.Add("outSR", outSR.ToString());
-			}
-			if (!string.IsNullOrEmpty(lrsYear))
-			{
-				parameters.Add("lrsYear", lrsYear);
-			}
-			if (!string.IsNullOrEmpty(routeFilter))
-			{
-				parameters.Add("routeFilter", routeFilter);
-			}
-
-			UriBuilder builder = new UriBuilder(this.Url + "/" + this.FindNearestRouteLocationsOperationName);
-
-			request = WebRequest.Create(builder.Uri);
-			request.ContentType = "application/x-www-form-urlencoded";
-			request.Method = "POST";
-			bytes = parameters.ToQueryStringBytes();
-			request.ContentLength = bytes.Length;
+			RouteLocation[] routeLocations = null;
+			FindNearestRouteLocationsAsync(coordinates, referenceDate, searchRadius, inSR, outSR, lrsYear, routeFilter).ContinueWith(t => {
+				routeLocations = t.Result;
+			}).Wait();
+			return routeLocations;
 		}
 
 		/// <summary>
@@ -441,18 +522,26 @@ namespace Wsdot.Elc.Wrapper
 		/// </example>
 		/// </param>
 		/// <returns>An array of <see cref="RouteLocation"/> objects.</returns>
+		[Obsolete("Use FindNearestRouteLocationsAsync instead.")]
 		public RouteLocation[] FindNearestRouteLocations<T>(IEnumerable<T> coordinates, DateTime referenceDate, double searchRadius,
 			object inSR, object outSR, string lrsYear, string routeFilter = null) where T : class, IEnumerable<double>
 		{
 			return FindNearestRouteLocations(coordinates.SelectMany(c => c.Take(2)), referenceDate, searchRadius, inSR, outSR, lrsYear, routeFilter);
 		}
 
-		public Dictionary<LrsTypes, PolylineContract> FindRoute(RouteInfo routeInfo, string LrsYear="Current", int? outSR=null)
+		/// <summary>
+		/// Finds a route that matches the info in <paramref name="routeInfo"/>.
+		/// </summary>
+		/// <param name="routeInfo">Provides information about the route.</param>
+		/// <param name="lrsYear">Determines which year's LRS is used. Defaults to "Current" if omitted.</param>
+		/// <param name="outSR">The output spatial reference system WKID. If omitted the output spatial reference will be the map service's default spatial reference.</param>
+		/// <returns></returns>
+		public async Task<Dictionary<LrsTypes, PolylineContract>> FindRouteAsync(RouteInfo routeInfo, string lrsYear = "Current", int? outSR = null)
 		{
 			var layers = this.Layers;
-			LayerInfo parentLayer = string.IsNullOrEmpty(LrsYear) ? layers.First(l => l.ParentLayerId == -1) : layers.First(l => l.Name == LrsYear);
+			LayerInfo parentLayer = string.IsNullOrEmpty(lrsYear) ? layers.First(l => l.ParentLayerId == -1) : layers.First(l => l.Name == lrsYear);
 			IEnumerable<LayerInfo> subLayers = layers.Where(l => l.ParentLayerId == parentLayer.Id);
-			Dictionary<LrsTypes, PolylineContract> output = new Dictionary<LrsTypes,PolylineContract>(2);
+			Dictionary<LrsTypes, PolylineContract> output = new Dictionary<LrsTypes, PolylineContract>(2);
 
 			/*
 			 * http://wsdot.wa.gov/geosvcs/ArcGIS/rest/services/Shared/ElcRestSoe/MapServer/1/query?text=&where=RouteID+%3D+%27005%27&returnGeometry=true&maxAllowableOffset=&outSR=&f=json
@@ -462,72 +551,51 @@ namespace Wsdot.Elc.Wrapper
 			string fmt = string.Format("{0}/{{0}}/query?where=RouteID+%3D+%27{{1}}%27&returnGeometry=true&outSR={1}&f=json", 
 				this.MapServerUrl, outSR.HasValue ? outSR.Value.ToString() : string.Empty);
 
-			string iJson = null, dJson = null, rJson = null;
-
-			using (var client = new WebClient())
-			{
-				string url;
-				LayerInfo layerInfo;
-
-				if ((routeInfo.LrsTypes & LrsTypes.Increase) == LrsTypes.Increase)
-				{
-					layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Increase", true) == 0);
-					if (layerInfo != null)
-					{
-						url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
-						iJson = client.DownloadString(url);
-					}
-				}
-				if ((routeInfo.LrsTypes & LrsTypes.Decrease) == LrsTypes.Decrease)
-				{
-					layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Decrease", true) == 0);
-					if (layerInfo != null)
-					{
-						url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
-						dJson = client.DownloadString(url);
-					}
-				}
-				if ((routeInfo.LrsTypes & LrsTypes.Ramp) == LrsTypes.Ramp)
-				{
-					layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Ramp", true) == 0);
-					if (layerInfo != null)
-					{
-						url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
-						rJson = client.DownloadString(url);
-					}
-				}
-			}
-
-			RouteLayerQueryResponse response;
-			RouteLayerQueryResponseFeature feature;
 			var jsSettings = new JsonSerializerSettings
 			{
 				MissingMemberHandling = MissingMemberHandling.Ignore
 			};
-			if (!string.IsNullOrEmpty(iJson))
+
+			using (var client = new HttpClient())
 			{
-				response = JsonConvert.DeserializeObject<RouteLayerQueryResponse>(iJson, jsSettings);
-				feature = response.features.FirstOrDefault();
-				if (feature != null) {
-					output.Add(LrsTypes.Increase, feature.geometry as PolylineContract);
-				}
-			}
-			if (!string.IsNullOrEmpty(dJson))
-			{
-				response = JsonConvert.DeserializeObject<RouteLayerQueryResponse>(dJson, jsSettings);
-				feature = response.features.FirstOrDefault();
-				if (feature != null)
+				if ((routeInfo.LrsTypes & LrsTypes.Increase) == LrsTypes.Increase)
 				{
-					output.Add(LrsTypes.Decrease, feature.geometry as PolylineContract);
+					var layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Increase", true) == 0);
+					if (layerInfo != null)
+					{
+						string url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
+						PolylineContract feature = await QueryForFeature(jsSettings, url);
+						if (feature != null)
+						{
+							output.Add(LrsTypes.Increase, feature);
+						}
+					}
 				}
-			}
-			if (!string.IsNullOrEmpty(rJson))
-			{
-				response = JsonConvert.DeserializeObject<RouteLayerQueryResponse>(rJson, jsSettings);
-				feature = response.features.FirstOrDefault();
-				if (feature != null)
+				if ((routeInfo.LrsTypes & LrsTypes.Decrease) == LrsTypes.Decrease)
 				{
-					output.Add(LrsTypes.Ramp, feature.geometry as PolylineContract);
+					var layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Decrease", true) == 0);
+					if (layerInfo != null)
+					{
+						string url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
+						PolylineContract feature = await QueryForFeature(jsSettings, url);
+						if (feature != null)
+						{
+							output.Add(LrsTypes.Decrease, feature);
+						}
+					}
+				}
+				if ((routeInfo.LrsTypes & LrsTypes.Ramp) == LrsTypes.Ramp)
+				{
+					var layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Ramp", true) == 0);
+					if (layerInfo != null)
+					{
+						string url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
+						PolylineContract feature = await QueryForFeature(jsSettings, url);
+						if (feature != null)
+						{
+							output.Add(LrsTypes.Ramp, feature);
+						}
+					}
 				}
 			}
 
@@ -535,6 +603,44 @@ namespace Wsdot.Elc.Wrapper
 			{
 				output = null;
 			}
+
+			return output;
+		}
+
+		private static async Task<PolylineContract> QueryForFeature(JsonSerializerSettings jsSettings, string url)
+		{
+			PolylineContract output = null;
+			RouteLayerQueryResponse response;
+			using (var client = new HttpClient())
+			using (var stream = await client.GetStreamAsync(url))
+			using (var streamReader = new StreamReader(stream))
+			using (var jsonReader = new JsonTextReader(streamReader))
+			{
+				var serializer = JsonSerializer.Create(jsSettings);
+				response = await Task.Run(() => serializer.Deserialize<RouteLayerQueryResponse>(jsonReader));
+			}
+			var feature = response.features.FirstOrDefault();
+			if (feature != null)
+			{
+				output = feature.geometry as PolylineContract;
+			}
+			return output;
+		}
+
+		/// <summary>
+		/// Finds a route that matches the info in <paramref name="routeInfo"/>.
+		/// </summary>
+		/// <param name="routeInfo">Provides information about the route.</param>
+		/// <param name="lrsYear">Determines which year's LRS is used. Defaults to "Current" if omitted.</param>
+		/// <param name="outSR">The output spatial reference system WKID. If omitted the output spatial reference will be the map service's default spatial reference.</param>
+		/// <returns></returns>
+		[Obsolete("Use FindRouteAsync instead.")]
+		public Dictionary<LrsTypes, PolylineContract> FindRoute(RouteInfo routeInfo, string lrsYear="Current", int? outSR=null)
+		{
+			Dictionary<LrsTypes, PolylineContract> output = null;
+			FindRouteAsync(routeInfo, lrsYear, outSR).ContinueWith(t => {
+				output = t.Result;
+			}).Wait();
 
 			return output;
 		}

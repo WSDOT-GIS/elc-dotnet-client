@@ -1,16 +1,17 @@
 ﻿using System.Reflection;
-using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Resources;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ELC REST SOE Wrapper Test")]
-[assembly: AssemblyDescription("Tests the ELC REST SOE Wrapper class.")]
+[assembly: AssemblyTitle("Json.NET Serialization Helper classes for ELC")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("WSDOT")]
-[assembly: AssemblyProduct("ELC REST SOE")]
-[assembly: AssemblyCopyright("Copyright © WSDOT 2011")]
+[assembly: AssemblyProduct("ELC")]
+[assembly: AssemblyCopyright("Copyright © WSDOT 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("18ea2664-d326-4620-aa88-cfb7e004fd3e")]
+[assembly: Guid("22629bbf-b3da-4a54-85f9-1a52c4b1b48c")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -31,6 +32,7 @@ using System.Runtime.InteropServices;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.0.2.0")]
-[assembly: AssemblyFileVersion("1.0.2.0")]
+// [assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]

@@ -9,6 +9,7 @@ using Wsdot.Elc.Wrapper;
 
 namespace WrapperTest
 {
+#pragma warning disable 612, 618
 	[TestClass]
 	public class ElcAsyncTest
 	{
@@ -180,4 +181,5 @@ namespace WrapperTest
 			_findNearestRouteLocatonsCompleted = true;
 		}
 	}
+#pragma warning restore 612, 618
 }
