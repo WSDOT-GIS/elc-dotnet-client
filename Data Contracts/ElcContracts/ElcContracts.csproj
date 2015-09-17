@@ -70,6 +70,7 @@
     <Compile Include="RouteLocationSet.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RouteType.cs" />
     <Compile Include="StateRouteExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
