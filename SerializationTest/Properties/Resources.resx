@@ -117,8 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="RouteLocations" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\routelocations.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="RouteLocations" xml:space="preserve">
+    <value>[{
+	"Angle": 155.49741407457302,
+	"Arm": 0,
+	"ArmCalcReturnCode": 0,
+	"ArmCalcReturnMessage": "",
+	"Back": false,
+	"Decrease": false,
+	"Distance": 7.613708567744251E-05,
+	"EventPoint": {
+		"x": 1083893.182,
+		"y": 111526.885
+	},
+	"Id": 0,
+	"RealignmentDate": "12\/4\/1986",
+	"ReferenceDate": "12\/31\/2011",
+	"ResponseDate": "12\/31\/2013",
+	"Route": "005",
+	"RouteGeometry": {
+		"__type": "Point:#Wsdot.Geometry.Contracts",
+		"spatialReference": {
+			"wkid": 2927
+		},
+		"x": 1083893.18192406,
+		"y": 111526.88500547409
+	},
+	"Srmp": 0
+}]</value>
   </data>
 </root>
