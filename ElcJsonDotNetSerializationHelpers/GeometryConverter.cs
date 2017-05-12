@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Reflection;
 using Wsdot.Geometry.Contracts;
 
 namespace Wsdot.Elc.Serialization
