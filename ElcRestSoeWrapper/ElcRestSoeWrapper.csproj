@@ -7,9 +7,11 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <Version>2.0.0</Version>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
-    <PackageId>ELC REST SOE Client</PackageId>
-    <Authors />
+    <PackageId>Wsdot.Elc.Client</PackageId>
+    <Authors>Jeff Jacobson</Authors>
     <Description>Client library for ELC REST SOE extension for ArcGIS Server.</Description>
+    <RootNamespace>Wsdot.Elc.Wrapper</RootNamespace>
+    <RepositoryUrl>https://github.com/WSDOT-GIS/elc-dotnet-client</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

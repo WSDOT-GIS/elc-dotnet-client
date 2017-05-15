@@ -59,11 +59,15 @@ namespace WrapperTest
             // Use the appropriate overload depending on if WKID or WKT was provided.
             if (int.TryParse(srString, out wkid))
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 routeLocations = wrapper.FindRouteLocations(locations, referenceDate, wkid, lrsYear);
+#pragma warning restore CS0618 // Type or member is obsolete
             }
             else
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 routeLocations = wrapper.FindRouteLocations(locations, referenceDate, string.IsNullOrWhiteSpace(srString) ? null : srString, lrsYear);
+#pragma warning restore CS0618 // Type or member is obsolete
             }
 
             Assert.IsTrue(routeLocations.Length == locations.Length, "Length of input and output collections do not match.");
@@ -93,12 +97,14 @@ namespace WrapperTest
             // Use the appropriate overload depending on if WKID or WKT was provided.
             if (int.TryParse(srString, out wkid))
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 routeLocations = wrapper.FindRouteLocations(locations, referenceDate, wkid, lrsYear);
             }
             else
             {
                 routeLocations = wrapper.FindRouteLocations(locations, referenceDate, string.IsNullOrWhiteSpace(srString) ? null : srString, lrsYear);
             }
+#pragma warning restore CS0618 // Type or member is obsolete
 
             Assert.IsTrue(routeLocations.Length == locations.Length, "Length of input and output collections do not match.");
             Assert.IsFalse(HasArmCalcErrors(routeLocations), "One or more ArmCalc errors occured.");
@@ -111,7 +117,9 @@ namespace WrapperTest
             ElcWrapper wrapper = ElcWrapper.GetInstance();
 
             var coordinates = new double[][] { new double[] { -13685032.630180165, 5935861.0454789074 } };
+#pragma warning disable CS0618 // Type or member is obsolete
             var output = wrapper.FindNearestRouteLocations(coordinates, DateTime.Now, 200, 102100, 102100, "Current", "LIKE '005%'");
+#pragma warning restore CS0618 // Type or member is obsolete
 
             Assert.IsTrue(output.Count() == coordinates.Length, "Length of input and output do not match.");
         }
@@ -250,7 +258,9 @@ namespace WrapperTest
         {
             var wrapper = ElcWrapper.GetInstance();
 
+#pragma warning disable CS0618 // Type or member is obsolete
             var result = wrapper.FindRoute(new RouteInfo { Name = "005", LrsTypes = LrsTypes.Both });
+#pragma warning restore CS0618 // Type or member is obsolete
 
             Assert.IsTrue(result.Keys.Count == 2, "There should be two results for 005: Increase and Decrease");
             Assert.IsNotNull(result[LrsTypes.Increase], "Increase geometry should not be null.");

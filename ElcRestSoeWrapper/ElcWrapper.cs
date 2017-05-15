@@ -63,7 +63,6 @@ namespace Wsdot.Elc.Wrapper
 		/// service for the information, which will then be stored in memory.
 		/// Subsequent requests will retrieve this information from memory.
 		/// </remarks>
-		/// <exception cref="WebException">Thrown if an error is encountered when requesting data.</exception>
 		public Dictionary<string, List<RouteInfo>> Routes
 		{
 			get

@@ -117,7 +117,11 @@ namespace Wsdot.Elc.Wrapper
             return Encoding.ASCII.GetBytes(qs);
         }
 
-
+        /// <summary>
+        /// Converts a date into string using <see cref="DateTimeFormatInfo.ShortDatePattern"/>.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public static string ToShortDateString(this DateTime date)
         {
             return date.ToString(DateTimeFormatInfo.CurrentInfo.ShortDatePattern);
