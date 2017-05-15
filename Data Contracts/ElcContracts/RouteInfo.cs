@@ -106,7 +106,7 @@ namespace Wsdot.Elc.Contracts
 			}
 			else
 			{
-				return string.Compare(this.Name, other.Name, StringComparison.InvariantCultureIgnoreCase) == 0;
+				return string.Compare(this.Name, other.Name, StringComparison.OrdinalIgnoreCase) == 0;
 			}
 		}
 
@@ -171,7 +171,7 @@ namespace Wsdot.Elc.Contracts
 
 			if (this.Name != null && other.Name != null)
 			{
-				var comparison = string.Compare(this.Name, other.Name, StringComparison.InvariantCultureIgnoreCase);
+				var comparison = string.Compare(this.Name, other.Name, StringComparison.OrdinalIgnoreCase);
 				if (comparison == 0)
 				{
 					// Names are the same.  Compare LrsTypes.
