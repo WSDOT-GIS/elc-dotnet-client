@@ -18,7 +18,7 @@ namespace Wsdot.Elc.Wrapper
 	/// </summary>
 	public partial class ElcWrapper
 	{
-		const string _defaultUrl = "http://www.wsdot.wa.gov/geoservices/arcgis/rest/services/Shared/ElcRestSOE/MapServer/exts/ElcRestSoe";
+		const string _defaultUrl = "https://data.wsdot.wa.gov/arcgis/rest/services/Shared/ElcRestSOE/MapServer/exts/ElcRestSoe";
 		const string _mapServiceUrlRe = @"(?i)^(.+)/exts/.+$";
 		const string _defaultFindRouteLocationOperationName = "Find Route Locations";
 		const string _defaultFindNearestRouteLocationsOperationName = "Find Nearest Route Locations";
