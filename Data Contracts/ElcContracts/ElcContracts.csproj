@@ -7,6 +7,15 @@
     <Company>WSDOT</Company>
     <Product>ELC REST SOE Client</Product>
     <Description />
+    <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.4\.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.4\.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

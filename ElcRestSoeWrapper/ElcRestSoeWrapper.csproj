@@ -12,12 +12,15 @@
     <Description>Client library for ELC REST SOE extension for ArcGIS Server.</Description>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.4\ElcRestSoeWrapper.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.4\ElcRestSoeWrapper.xml</DocumentationFile>
+  </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Properties\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 
