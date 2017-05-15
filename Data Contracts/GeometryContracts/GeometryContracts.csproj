@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
+    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Authors />
+    <Company>WSDOT</Company>
+    <Product>ELC REST SOE Client</Product>
+    <Description />
   </PropertyGroup>
 
   <ItemGroup>
