@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
-    <Version>2.0.1</Version>
+    <TargetFrameworks>netstandard1.4;net461</TargetFrameworks>
+    <Version>2.0.2</Version>
     <Authors>Jeff Jacobson</Authors>
     <Company>WSDOT</Company>
     <Product>ELC REST SOE Client</Product>

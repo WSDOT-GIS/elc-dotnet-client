@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
-    <Version>2.0.1</Version>
+    <TargetFrameworks>netstandard1.4;net461</TargetFrameworks>
+    <Version>2.0.2</Version>
     <AssemblyVersion>2.0.1.0</AssemblyVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Authors>Jeff Jacobson</Authors>
     <Company>WSDOT</Company>
     <Product>ELC REST SOE Client</Product>
-    <Description />
+    <Description>Geometry data contracts</Description>
     <RootNamespace>Wsdot.Geometry.Contracts</RootNamespace>
     <RepositoryUrl>https://github.com/WSDOT-GIS/elc-dotnet-client</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

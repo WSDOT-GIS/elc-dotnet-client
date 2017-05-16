@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFrameworks>netstandard1.4;net461</TargetFrameworks>
     <Company>WSDOT</Company>
     <Product>ELC REST SOE Client</Product>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.0.1</Version>
-    <AssemblyVersion>2.0.1.0</AssemblyVersion>
+    <Version>2.0.2</Version>
+    <AssemblyVersion>2.0.2.0</AssemblyVersion>
     <PackageId>Wsdot.Elc.Client</PackageId>
     <Authors>Jeff Jacobson</Authors>
     <Description>Client library for ELC REST SOE extension for ArcGIS Server.</Description>
@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <PackageReference Include="System.Net.Http" Version="4.3.2" />
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
   </ItemGroup>
 
