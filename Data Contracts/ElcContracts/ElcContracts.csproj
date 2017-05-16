@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <Authors>Jeff Jacobson</Authors>
     <Company>WSDOT</Company>
     <Product>ELC REST SOE Client</Product>
@@ -12,6 +12,10 @@
     <PackageId>Wsdot.Elc.Contracts</PackageId>
     <Copyright>Public Domain</Copyright>
     <RepositoryUrl>https://github.com/WSDOT-GIS/elc-dotnet-client</RepositoryUrl>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>C:\Users\jacobsj\Documents\GitHub\elc-dotnet-client\Wsdot.Elc.Client.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <PackageReleaseNotes>Added strong name</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -21,6 +25,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard1.4\.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\Wsdot.Elc.Client.snk" Link="Wsdot.Elc.Client.snk" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />

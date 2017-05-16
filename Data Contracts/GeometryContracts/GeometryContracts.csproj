@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <Version>2.0.0</Version>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <Version>2.0.1</Version>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Authors>Jeff Jacobson</Authors>
     <Company>WSDOT</Company>
@@ -13,6 +13,9 @@
     <RepositoryUrl>https://github.com/WSDOT-GIS/elc-dotnet-client</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageId>Wsdot.Elc.Contracts.Geometry</PackageId>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>C:\Users\jacobsj\Documents\GitHub\elc-dotnet-client\Wsdot.Elc.Client.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -33,6 +36,10 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\Wsdot.Elc.Client.snk" Link="Wsdot.Elc.Client.snk" />
   </ItemGroup>
 
 </Project>

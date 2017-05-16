@@ -5,13 +5,18 @@
     <Company>WSDOT</Company>
     <Product>ELC REST SOE Client</Product>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.0.0</Version>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <Version>2.0.1</Version>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>
     <PackageId>Wsdot.Elc.Client</PackageId>
     <Authors>Jeff Jacobson</Authors>
     <Description>Client library for ELC REST SOE extension for ArcGIS Server.</Description>
     <RootNamespace>Wsdot.Elc.Wrapper</RootNamespace>
     <RepositoryUrl>https://github.com/WSDOT-GIS/elc-dotnet-client</RepositoryUrl>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>C:\Users\jacobsj\Documents\GitHub\elc-dotnet-client\Wsdot.Elc.Client.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>False</DelaySign>
+    <PackageReleaseNotes>Added strong name</PackageReleaseNotes>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -24,6 +29,10 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Wsdot.Elc.Client.snk" Link="Wsdot.Elc.Client.snk" />
   </ItemGroup>
 
   <ItemGroup>
