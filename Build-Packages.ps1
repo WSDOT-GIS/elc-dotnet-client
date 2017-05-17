@@ -8,4 +8,4 @@
 # Restore project dependencies (e.g., JSON.Net)
 dotnet.exe restore
 # Create the NuGet packages.
-dotnet.exe pack --include-source --configuration Release --output $PSScriptRoot
+dotnet.exe pack --include-source --include-symbols --configuration Release --output $PSScriptRoot\nupkg

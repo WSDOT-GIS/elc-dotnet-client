@@ -14,6 +14,6 @@ param(
     [System.IO.DirectoryInfo]
     $source
 )
-foreach ($item in Get-Item *.nupkg) {
+foreach ($item in Get-Item .\nupkg\*.nupkg) {
     NuGet.exe add $item -Source $source
 }
