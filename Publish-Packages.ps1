@@ -11,7 +11,7 @@
 #>
 param(
     [Parameter(Mandatory=$true, HelpMessage="NuGet source to add feeds to.")]
-    [string]
+    [System.IO.DirectoryInfo]
     $source
 )
 foreach ($item in Get-Item *.nupkg) {

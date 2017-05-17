@@ -559,7 +559,7 @@ namespace Wsdot.Elc.Wrapper
 			{
 				if ((routeInfo.LrsTypes & LrsTypes.Increase) == LrsTypes.Increase)
 				{
-					var layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Increase", true) == 0);
+					var layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Increase", StringComparison.OrdinalIgnoreCase) == 0);
 					if (layerInfo != null)
 					{
 						string url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
@@ -572,7 +572,7 @@ namespace Wsdot.Elc.Wrapper
 				}
 				if ((routeInfo.LrsTypes & LrsTypes.Decrease) == LrsTypes.Decrease)
 				{
-					var layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Decrease", true) == 0);
+					var layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Decrease", StringComparison.OrdinalIgnoreCase) == 0);
 					if (layerInfo != null)
 					{
 						string url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
@@ -585,7 +585,7 @@ namespace Wsdot.Elc.Wrapper
 				}
 				if ((routeInfo.LrsTypes & LrsTypes.Ramp) == LrsTypes.Ramp)
 				{
-					var layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Ramp", true) == 0);
+					var layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Ramp", StringComparison.OrdinalIgnoreCase) == 0);
 					if (layerInfo != null)
 					{
 						string url = string.Format(fmt, layerInfo.Id, routeInfo.Name);

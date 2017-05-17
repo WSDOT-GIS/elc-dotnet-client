@@ -37,7 +37,7 @@ namespace Wsdot.Elc.Wrapper
 
             }
 
-            json = Encoding.UTF8.GetString(bytes);
+            json = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
             bytes = null;
 
             return json;
@@ -114,7 +114,7 @@ namespace Wsdot.Elc.Wrapper
         public static byte[] ToQueryStringBytes(this IDictionary<string, string> parameters)
         {
             string qs = parameters.ToQueryString();
-            return Encoding.ASCII.GetBytes(qs);
+            return Encoding.UTF8.GetBytes(qs);
         }
 
         /// <summary>

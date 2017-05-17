@@ -19,7 +19,8 @@ namespace Wsdot.Elc.Serialization
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(T).IsAssignableFrom(objectType);
+            var typeInfo = typeof(T).GetTypeInfo();
+            return typeInfo.IsAssignableFrom(objectType.GetTypeInfo());
         }
 
 

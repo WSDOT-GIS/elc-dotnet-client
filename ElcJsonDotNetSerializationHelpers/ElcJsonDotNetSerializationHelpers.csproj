@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.4;net461</TargetFrameworks>
+    <TargetFramework>netstandard1.1</TargetFramework>
     <Description>Json.NET Serialization Helper classes for ELC</Description>
     <Company>WSDOT</Company>
     <Product>ELC Client</Product>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.0.2</Version>
+    <Version>2.1.0</Version>
     <RootNamespace>Wsdot.Elc.Serialization</RootNamespace>
     <RepositoryUrl>https://github.com/WSDOT-GIS/elc-dotnet-client</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -15,7 +15,7 @@
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\jacobsj\Documents\GitHub\elc-dotnet-client\Wsdot.Elc.Client.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
-    <PackageReleaseNotes>Added strong name</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -40,7 +40,6 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
-    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.4;net461</TargetFrameworks>
-    <Version>2.0.2</Version>
+    <TargetFramework>netstandard1.1</TargetFramework>
+    <Version>2.1.0</Version>
     <Authors>Jeff Jacobson</Authors>
     <Company>WSDOT</Company>
     <Product>ELC REST SOE Client</Product>
@@ -15,7 +15,8 @@
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\jacobsj\Documents\GitHub\elc-dotnet-client\Wsdot.Elc.Client.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
-    <PackageReleaseNotes>Added strong name</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -31,7 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
 

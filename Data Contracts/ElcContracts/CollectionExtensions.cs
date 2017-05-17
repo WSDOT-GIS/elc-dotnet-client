@@ -51,7 +51,7 @@ namespace Wsdot.Elc.Contracts
 			if (routeLocation == null) throw new ArgumentNullException("routeLocation");
 
 			// TODO: do without reflection.
-			var properties = from p in typeof(RouteLocation).GetProperties()
+			var properties = from p in typeof(RouteLocation).GetRuntimeProperties()
 							 where !p.Name.EndsWith("AsString")
 							 select new
 							 {
