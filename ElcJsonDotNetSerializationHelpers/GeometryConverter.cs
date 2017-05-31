@@ -27,6 +27,10 @@ namespace Wsdot.Elc.Serialization
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            if (serializer == null)
+            {
+                throw new ArgumentNullException(nameof(serializer));
+            }
             var jObject = JObject.Load(reader);
 
             T target = Create(objectType, jObject);
@@ -46,6 +50,9 @@ namespace Wsdot.Elc.Serialization
 
         protected static bool FieldExists(JObject jObject, string name, JTokenType type)
         {
+            if (jObject == null) {
+                throw new ArgumentNullException(nameof(jObject));
+            }
             JToken token;
             return jObject.TryGetValue(name, out token) && token.Type == type;
         }
