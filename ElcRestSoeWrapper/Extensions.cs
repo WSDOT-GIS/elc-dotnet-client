@@ -87,6 +87,10 @@ namespace Wsdot.Elc.Wrapper
         /// <returns>Returns a query string.</returns>
         public static string ToQueryString(this IDictionary<string, string> parameters)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
             var count = 0;
             StringBuilder sb = new StringBuilder();
             foreach (var kvp in parameters)
