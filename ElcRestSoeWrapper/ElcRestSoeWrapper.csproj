@@ -5,8 +5,8 @@
     <Company>WSDOT</Company>
     <Product>ELC REST SOE Client</Product>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>2.2</Version>
-    <AssemblyVersion>2.2.0.0</AssemblyVersion>
+    <Version>2.2.1</Version>
+    <AssemblyVersion>2.2.1.0</AssemblyVersion>
     <PackageId>Wsdot.Elc.Client</PackageId>
     <Authors>WSDOT</Authors>
     <Description>Client library for ELC REST SOE extension for ArcGIS Server.</Description>
@@ -15,7 +15,7 @@
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>C:\Users\jacobsj\Documents\GitHub\elc-dotnet-client\Wsdot.Elc.Client.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>No longer uses WebClient to make web requests.</PackageReleaseNotes>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
