@@ -23,13 +23,13 @@ namespace Wsdot.Geometry.Contracts
 		/// <returns>Returns the JSON representation of this point.</returns>
 		public override string ToString()
 		{
-			if (this.SpatialReference != null)
+			if (SpatialReference != null)
 			{
-				return string.Format("{{ \"x\":{0}, \"y\":{1}, \"spatialReference\": {2} }}", this.X, this.Y, this.SpatialReference);
+				return string.Format("{{ \"x\":{0}, \"y\":{1}, \"spatialReference\": {2} }}", X, Y, SpatialReference);
 			}
 			else
 			{
-				return string.Format("{{ \"x\":{0}, \"y\":{1} }}", this.X, this.Y);
+				return string.Format("{{ \"x\":{0}, \"y\":{1} }}", X, Y);
 
 			}
 		}
@@ -40,7 +40,7 @@ namespace Wsdot.Geometry.Contracts
 		/// <returns></returns>
 		public double[] ToArray()
 		{
-			return new double[] { this.X, this.Y };
+			return new double[] { X, Y };
 		}
 	} 
 }

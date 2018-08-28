@@ -29,7 +29,7 @@ namespace Wsdot.Elc.Contracts
 		public RouteLocation ReturnLocationWithShortestOffset()
 		{
 			RouteLocation output = null;
-			foreach (var loc in new RouteLocation[] { this.Increase, this.Decrease, this.Ramp })
+			foreach (var loc in new RouteLocation[] { Increase, Decrease, Ramp })
 			{
 				if (loc != null)
 				{

@@ -28,11 +28,11 @@ namespace Wsdot.Geometry.Contracts
 		{
 			if (Wkid.HasValue)
 			{
-				return string.Format("{{\"wkid\":{0}}}", this.Wkid);
+				return string.Format("{{\"wkid\":{0}}}", Wkid);
 			}
 			else
 			{
-				return string.Format("{{\"wkt\":\"{0}\"}}", this.Wkid);
+				return string.Format("{{\"wkt\":\"{0}\"}}", Wkid);
 			}
 		}
 	} 

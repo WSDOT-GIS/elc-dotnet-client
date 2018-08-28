@@ -21,25 +21,25 @@ namespace Wsdot.Elc.Contracts
 			set {
 				if (value == null)
 				{
-					this.SR = this.Rrt = this.Rrq = null;
-					this.HasValidName = false;
+					SR = Rrt = Rrq = null;
+					HasValidName = false;
 				}
 				else
 				{
 					string sr, rrt, rrq;
-					this.HasValidName = value.TryParse(out sr, out rrt, out rrq);
+					HasValidName = value.TryParse(out sr, out rrt, out rrq);
 					_name = value;
-					if (this.HasValidName)
+					if (HasValidName)
 					{
-						this.SR = sr;
-						this.Rrt = rrt;
-						this.Rrq = rrq;
+						SR = sr;
+						Rrt = rrt;
+						Rrq = rrq;
 					}
 					else
 					{
-						this.SR = null;
-						this.Rrt = null;
-						this.Rrq = null;
+						SR = null;
+						Rrt = null;
+						Rrq = null;
 					}
 				}
 			}
@@ -90,23 +90,23 @@ namespace Wsdot.Elc.Contracts
 			{
 				return false;
 			}
-			if (this.LrsTypes != other.LrsTypes)
+			if (LrsTypes != other.LrsTypes)
 			{
 				return false;
 			}
 
-			if ((this.Name == null && other.Name != null) || (this.Name != null && other.Name == null))
+			if ((Name == null && other.Name != null) || (Name != null && other.Name == null))
 			{
 				return false;
 			}
 
-			if (this.Name == null && other.Name == null)
+			if (Name == null && other.Name == null)
 			{
 				return true;
 			}
 			else
 			{
-				return string.Compare(this.Name, other.Name, StringComparison.OrdinalIgnoreCase) == 0;
+				return string.Compare(Name, other.Name, StringComparison.OrdinalIgnoreCase) == 0;
 			}
 		}
 
@@ -129,7 +129,7 @@ namespace Wsdot.Elc.Contracts
 			}
 			else
 			{
-				return this.Equals(other);
+				return Equals(other);
 			}
 		}
 
@@ -139,7 +139,7 @@ namespace Wsdot.Elc.Contracts
 		/// <returns>Returns a string representation of the <see cref="RouteInfo"/> object.</returns>
 		public override string ToString()
 		{
-			return string.Format("{0}:{1}", this.Name ?? "Null", this.LrsTypes);
+			return string.Format("{0}:{1}", Name ?? "Null", LrsTypes);
 		}
 
 		/// <summary>
@@ -149,7 +149,7 @@ namespace Wsdot.Elc.Contracts
 		/// <seealso cref="object.GetHashCode()"/>
 		public override int GetHashCode()
 		{
-			return this.Name != null ? this.Name.GetHashCode() : "NULL".GetHashCode() ^ this.LrsTypes.GetHashCode();
+			return Name != null ? Name.GetHashCode() : "NULL".GetHashCode() ^ LrsTypes.GetHashCode();
 		}
 
 		/// <summary>
@@ -164,25 +164,25 @@ namespace Wsdot.Elc.Contracts
 			{
 				return 1;
 			}
-			else if (this.Equals(other))
+			else if (Equals(other))
 			{
 				return 0;
 			}
 
-			if (this.Name != null && other.Name != null)
+			if (Name != null && other.Name != null)
 			{
-				var comparison = string.Compare(this.Name, other.Name, StringComparison.OrdinalIgnoreCase);
+				var comparison = string.Compare(Name, other.Name, StringComparison.OrdinalIgnoreCase);
 				if (comparison == 0)
 				{
 					// Names are the same.  Compare LrsTypes.
-					return this.LrsTypes.CompareTo(other.LrsTypes);
+					return LrsTypes.CompareTo(other.LrsTypes);
 				}
 				else
 				{
 					return comparison;
 				}
 			}
-			else if (this.Name == null)
+			else if (Name == null)
 			{
 				return -1;
 			}
@@ -201,7 +201,7 @@ namespace Wsdot.Elc.Contracts
 		public int CompareTo(object obj)
 		{
 			RouteInfo other = obj as RouteInfo;
-			return this.CompareTo(other);
+			return CompareTo(other);
 		}
 	}
 }

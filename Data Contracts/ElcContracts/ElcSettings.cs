@@ -123,10 +123,10 @@ namespace Wsdot.Elc.Contracts
 			if (obj != null || obj.GetType() == typeof(ElcSettings))
 			{
 				var other = (ElcSettings)obj;
-				return string.Compare(this.Url, other.Url, StringComparison.Ordinal) == 0
-					&& string.Compare(this.FindNearestRouteLocationOperationName, other.FindNearestRouteLocationOperationName, StringComparison.Ordinal) == 0
-					&& string.Compare(this.FindRouteLocationOperationName, other.FindRouteLocationOperationName, StringComparison.Ordinal) == 0
-					&& string.Compare(this.RoutesResourceName, other.RoutesResourceName, StringComparison.Ordinal) == 0;
+				return string.Compare(Url, other.Url, StringComparison.Ordinal) == 0
+					&& string.Compare(FindNearestRouteLocationOperationName, other.FindNearestRouteLocationOperationName, StringComparison.Ordinal) == 0
+					&& string.Compare(FindRouteLocationOperationName, other.FindRouteLocationOperationName, StringComparison.Ordinal) == 0
+					&& string.Compare(RoutesResourceName, other.RoutesResourceName, StringComparison.Ordinal) == 0;
 			}
 			return base.Equals(obj);
 		}
@@ -138,7 +138,7 @@ namespace Wsdot.Elc.Contracts
 		/// <returns>Returns <see langword="true"/> if they are equal, <see langword="false"/> otherwise.</returns>
 		public bool Equals(ElcSettings other)
 		{
-			return this.Equals(other as object);
+			return Equals(other as object);
 		}
 
 		/// <summary>

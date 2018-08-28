@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using Wsdot.Elc.Contracts;
 using Wsdot.Elc.Wrapper;
 
@@ -19,6 +19,14 @@ namespace WrapperTest
         const string _defaultFindNearestRouteLocationsOperationName = "Find Nearest Route Locations";
         const string _wgs84Wkt = "PROJCS[\"WGS_1984_Web_Mercator_Auxiliary_Sphere\",GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.017453292519943295]],PROJECTION[\"Mercator_Auxiliary_Sphere\"],PARAMETER[\"False_Easting\",0.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",0.0],PARAMETER[\"Standard_Parallel_1\",0.0],PARAMETER[\"Auxiliary_Sphere_Type\",0.0],UNIT[\"Meter\",1.0]]";
 
+        private ElcWrapper _elcClient;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            _elcClient = new ElcWrapper(_defaultUrl, _defaultFindRouteLocationsOperationName, _defaultFindNearestRouteLocationsOperationName);
+        }
+
         private TestContext _testContext;
 
         public TestContext TestContext
@@ -27,7 +35,7 @@ namespace WrapperTest
             set { _testContext = value; }
         }
 
-        private bool HasArmCalcErrors(IEnumerable<RouteLocation> locations)
+        private static bool HasArmCalcErrors(IEnumerable<RouteLocation> locations)
         {
             return (from l in locations
                     where l.ArmCalcReturnCode != 0 && l.ArmCalcEndReturnCode != 0
@@ -36,10 +44,8 @@ namespace WrapperTest
 
 
         [TestMethod]
-        public void TestFindRouteLocations()
+        public async Task TestFindRouteLocations()
         {
-            ElcWrapper wrapper = ElcWrapper.GetInstance();
-
             // Get the input route locations from the test settings.
             RouteLocation[] locations = "[{\"Route\":\"005\", \"Arm\": 0, \"EndArm\": 100}]".ToRouteLocations<RouteLocation[]>();
 
@@ -49,7 +55,6 @@ namespace WrapperTest
             // Get the LRS Year from the test properties.  If an empty string or whitespace, assume null.
             const string lrsYear = "Current";
 
-            int wkid;
 
             RouteLocation[] routeLocations;
 
@@ -57,26 +62,25 @@ namespace WrapperTest
 
             // If the provided SR is a WKID, convert to int.
             // Use the appropriate overload depending on if WKID or WKT was provided.
-            if (int.TryParse(srString, out wkid))
+            if (int.TryParse(srString, out int wkid))
             {
-#pragma warning disable CS0618 // Type or member is obsolete
-                routeLocations = wrapper.FindRouteLocations(locations, referenceDate, wkid, lrsYear);
-#pragma warning restore CS0618 // Type or member is obsolete
+
+                routeLocations = await _elcClient.FindRouteLocations(locations, referenceDate, wkid, lrsYear);
+
             }
             else
             {
-#pragma warning disable CS0618 // Type or member is obsolete
-                routeLocations = wrapper.FindRouteLocations(locations, referenceDate, string.IsNullOrWhiteSpace(srString) ? null : srString, lrsYear);
-#pragma warning restore CS0618 // Type or member is obsolete
+
+                routeLocations = await _elcClient.FindRouteLocations(locations, referenceDate, string.IsNullOrWhiteSpace(srString) ? null : srString, lrsYear);
+
             }
 
             Assert.IsTrue(routeLocations.Length == locations.Length, "Length of input and output collections do not match.");
         }
 
         [TestMethod]
-        public void TestFindRouteLocationsWithInlineReferenceDates()
+        public async Task TestFindRouteLocationsWithInlineReferenceDates()
         {
-            ElcWrapper wrapper = ElcWrapper.GetInstance();
             const string routeLocationsJson = "[{\"Route\":\"005\", \"Arm\": 0, \"EndArm\": 100, \"ReferenceDate\": \"12/31/2011\"}]";
 
             // Get the input route locations from the test settings.
@@ -87,7 +91,6 @@ namespace WrapperTest
 
             // Get the LRS Year from the test properties.  If an empty string or whitespace, assume null.
             string lrsYear = "Current";
-            int wkid;
 
             RouteLocation[] routeLocations;
 
@@ -95,33 +98,29 @@ namespace WrapperTest
 
             // If the provided SR is a WKID, convert to int.
             // Use the appropriate overload depending on if WKID or WKT was provided.
-            if (int.TryParse(srString, out wkid))
+            if (int.TryParse(srString, out int wkid))
             {
-#pragma warning disable CS0618 // Type or member is obsolete
-                routeLocations = wrapper.FindRouteLocations(locations, referenceDate, wkid, lrsYear);
+
+                routeLocations = await _elcClient.FindRouteLocations(locations, referenceDate, wkid, lrsYear);
             }
             else
             {
-                routeLocations = wrapper.FindRouteLocations(locations, referenceDate, string.IsNullOrWhiteSpace(srString) ? null : srString, lrsYear);
+                routeLocations = await _elcClient.FindRouteLocations(locations, referenceDate, string.IsNullOrWhiteSpace(srString) ? null : srString, lrsYear);
             }
-#pragma warning restore CS0618 // Type or member is obsolete
+
 
             Assert.IsTrue(routeLocations.Length == locations.Length, "Length of input and output collections do not match.");
             Assert.IsFalse(HasArmCalcErrors(routeLocations), "One or more ArmCalc errors occured.");
         }
 
         [TestMethod]
-        public void TestFindNearestRouteLocation()
+        public async Task TestFindNearestRouteLocation()
         {
             // Get the test properties.
-            ElcWrapper wrapper = ElcWrapper.GetInstance();
+            var coordinates = new double[] { -13685032.630180165, 5935861.0454789074 };
+            var output = await _elcClient.FindNearestRouteLocations(coordinates, DateTime.Now, 200, 102100, 102100, "Current", "LIKE '005%'");
 
-            var coordinates = new double[][] { new double[] { -13685032.630180165, 5935861.0454789074 } };
-#pragma warning disable CS0618 // Type or member is obsolete
-            var output = wrapper.FindNearestRouteLocations(coordinates, DateTime.Now, 200, 102100, 102100, "Current", "LIKE '005%'");
-#pragma warning restore CS0618 // Type or member is obsolete
-
-            Assert.IsTrue(output.Count() == coordinates.Length, "Length of input and output do not match.");
+            Assert.AreEqual(1, output.Length, "Length of input and output do not match.");
         }
 
         [TestMethod]
@@ -135,9 +134,7 @@ namespace WrapperTest
         public void TestRoutesList()
         {
             // Get the test properties.
-            ElcWrapper wrapper = ElcWrapper.GetInstance();
-
-            var routes = wrapper.Routes;
+            var routes = _elcClient.Routes;
 
             Assert.IsFalse(routes == null);
             Assert.IsTrue(routes.Count > 0, "There should be at least one element corresponding to an LRS year.");
@@ -195,11 +192,12 @@ namespace WrapperTest
                 LrsTypes = LrsTypes.Increase
             };
 
-            List<RouteInfo> routeInfo = new List<RouteInfo>();
-            routeInfo = new List<RouteInfo>(3);
-            routeInfo.Add(r101Both);
-            routeInfo.Add(r005Both);
-            routeInfo.Add(r005Inc);
+            var routeInfo = new List<RouteInfo>(new[]
+            {
+                r101Both,
+                r005Both,
+                r005Inc
+            });
 
             // Sort the list and test for the expected order.
             routeInfo.Sort();
@@ -254,13 +252,11 @@ namespace WrapperTest
         }
 
         [TestMethod]
-        public void TestFindRoute()
+        public async Task TestFindRoute()
         {
-            var wrapper = ElcWrapper.GetInstance();
 
-#pragma warning disable CS0618 // Type or member is obsolete
-            var result = wrapper.FindRoute(new RouteInfo { Name = "005", LrsTypes = LrsTypes.Both });
-#pragma warning restore CS0618 // Type or member is obsolete
+            var result = await _elcClient.FindRoute(new RouteInfo { Name = "005", LrsTypes = LrsTypes.Both });
+
 
             Assert.IsTrue(result.Keys.Count == 2, "There should be two results for 005: Increase and Decrease");
             Assert.IsNotNull(result[LrsTypes.Increase], "Increase geometry should not be null.");
