@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Company>WSDOT</Company>
     <Product>ELC REST SOE Client</Product>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -13,7 +14,7 @@
     <RootNamespace>Wsdot.Elc.Client</RootNamespace>
     <RepositoryUrl>https://github.com/WSDOT-GIS/elc-dotnet-client</RepositoryUrl>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>C:\Users\jacobsj\Documents\GitHub\elc-dotnet-client\Wsdot.Elc.Client.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Wsdot.Elc.Client.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <PackageReleaseNotes></PackageReleaseNotes>
     <RepositoryType>git</RepositoryType>

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Version>2.1.0</Version>
     <Authors>Jeff Jacobson</Authors>
     <Company>WSDOT</Company>
@@ -13,18 +14,10 @@
     <Copyright>Public Domain</Copyright>
     <RepositoryUrl>https://github.com/WSDOT-GIS/elc-dotnet-client</RepositoryUrl>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>C:\Users\jacobsj\Documents\GitHub\elc-dotnet-client\Wsdot.Elc.Client.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\Wsdot.Elc.Client.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <PackageReleaseNotes></PackageReleaseNotes>
     <RepositoryType>git</RepositoryType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
