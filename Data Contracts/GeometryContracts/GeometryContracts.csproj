@@ -14,16 +14,16 @@
     <RepositoryType>git</RepositoryType>
     <PackageId>Wsdot.Elc.Contracts.Geometry</PackageId>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>C:\Users\jacobsj\Documents\GitHub\elc-dotnet-client\Wsdot.Elc.Client.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\Wsdot.Elc.Client.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard1.4\GeometryContracts.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netstandard2.0\GeometryContracts.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard1.4\GeometryContracts.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard2.0\GeometryContracts.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
