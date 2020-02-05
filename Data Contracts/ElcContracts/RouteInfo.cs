@@ -75,16 +75,22 @@ namespace Wsdot.Elc.Contracts
 		[DataMember]
 		public LrsTypes LrsTypes { get; set; }
 
-		/// <summary>
-		/// Compares a <see cref="RouteInfo"/> with another <see cref="RouteInfo"/>.  Comparison is based on <see cref="RouteInfo.Name"/> (case-insensitive) and 
-		/// <see cref="RouteInfo.LrsTypes"/>
-		/// </summary>
-		/// <param name="other">Another <see cref="RouteInfo"/></param>
-		/// <returns>
-		/// Returns <see langword="true"/> if both <see cref="RouteInfo"/> objects have the same <see cref="RouteInfo.Name"/> and <see cref="RouteInfo.LrsTypes"/>, 
-		/// <see langword="false"/> otherwise.
-		/// </returns>
-		public bool Equals(RouteInfo other)
+        /// <summary>
+        /// The type of route (e.g., US, State Route, Interstate)
+        /// </summary>
+        [DataMember(IsRequired = false)]
+        public RouteType RouteType { get; set; }
+
+        /// <summary>
+        /// Compares a <see cref="RouteInfo"/> with another <see cref="RouteInfo"/>.  Comparison is based on <see cref="RouteInfo.Name"/> (case-insensitive) and 
+        /// <see cref="RouteInfo.LrsTypes"/>
+        /// </summary>
+        /// <param name="other">Another <see cref="RouteInfo"/></param>
+        /// <returns>
+        /// Returns <see langword="true"/> if both <see cref="RouteInfo"/> objects have the same <see cref="RouteInfo.Name"/> and <see cref="RouteInfo.LrsTypes"/>, 
+        /// <see langword="false"/> otherwise.
+        /// </returns>
+        public bool Equals(RouteInfo other)
 		{
 			if (other == null)
 			{
