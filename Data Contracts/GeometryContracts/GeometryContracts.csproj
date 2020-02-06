@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>net452</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Version>2.1.0</Version>
     <AssemblyVersion>2.0.1.0</AssemblyVersion>
@@ -21,10 +21,6 @@
 
   <ItemGroup>
     <Compile Remove="GeometryExtensions.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
