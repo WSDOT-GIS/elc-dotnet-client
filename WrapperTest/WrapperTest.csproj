@@ -25,4 +25,8 @@
     <ProjectReference Include="..\ElcRestSoeWrapper\ElcRestSoeWrapper.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+
 </Project>
