@@ -3,7 +3,7 @@
 namespace Wsdot.Elc.Contracts
 {
     /// <summary>
-    /// <see href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Map_Service/02r3000000w2000000/"/>
+    /// <see href="https://developers.arcgis.com/rest/services-reference/enterprise/map-service.htm"/>
     /// </summary>
     [DataContract]
     public class MapServerInfo

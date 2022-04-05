@@ -8,7 +8,7 @@ namespace Wsdot.Elc.Contracts
 #pragma warning disable IDE1006 // Naming Styles
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     /// <summary>
-    /// <see href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Query_Map_Service_Layer/02r3000000p1000000/"/>
+    /// <see href="https://developers.arcgis.com/rest/services-reference/enterprise/query-map-service-layer-.htm"/>
     /// </summary>
     [DataContract]
     public class RouteLayerQueryResponseFeature

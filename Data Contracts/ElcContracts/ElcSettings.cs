@@ -10,7 +10,7 @@ namespace Wsdot.Elc.Contracts
 	public class ElcSettings : IEquatable<ElcSettings>
 	{
 		private const string 
-			_defaultUrl = "http://www.wsdot.wa.gov/geoservices/arcgis/rest/services/Shared/ElcRestSOE/MapServer/exts/ElcRestSoe",
+			_defaultUrl = "https://data.wsdot.wa.gov/arcgis/rest/services/Shared/ElcRestSOE/MapServer/exts/ElcRestSoe",
 			_defaultFindRouteLocationOperationName = "Find Route Locations",
 			_defaultFindNearestRouteLocationsOperationName = "Find Nearest Route Locations",
 			_defaultRoutesResourceName = "routes";
