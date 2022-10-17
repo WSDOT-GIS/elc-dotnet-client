@@ -110,7 +110,7 @@ namespace Wsdot.Elc.Wrapper
         }
 
         /// <summary>
-        /// Runs the <see cref="Extensions.ToQueryString(IDictionary&lt;string, string&gt;)"/> method and then converts its
+        /// Runs the <see cref="ToQueryString(IDictionary&lt;string, string&gt;)"/> method and then converts its
         /// output into a <see cref="byte"/> array.
         /// </summary>
         /// <param name="parameters">A dictionary of key and value strings.</param>

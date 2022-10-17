@@ -63,10 +63,10 @@ namespace Wsdot.Elc.Contracts
 		[DataMember(Name="RRQ")]
 		public string Rrq { get; private set; }
 
-		/// <summary>
-		/// Indicates if <see cref="RouteInfo.Name"/> is a valid state route name.
-		/// </summary>
-		public bool HasValidName { get; private set; }
+        /// <summary>
+        /// Indicates if <see cref="Name"/> is a valid state route name.
+        /// </summary>
+        public bool HasValidName { get; private set; }
 
 
 		/// <summary>
@@ -82,12 +82,12 @@ namespace Wsdot.Elc.Contracts
         public RouteType RouteType { get; set; }
 
         /// <summary>
-        /// Compares a <see cref="RouteInfo"/> with another <see cref="RouteInfo"/>.  Comparison is based on <see cref="RouteInfo.Name"/> (case-insensitive) and 
-        /// <see cref="RouteInfo.LrsTypes"/>
+        /// Compares a <see cref="RouteInfo"/> with another <see cref="RouteInfo"/>.  Comparison is based on <see cref="Name"/> (case-insensitive) and 
+        /// <see cref="LrsTypes"/>
         /// </summary>
         /// <param name="other">Another <see cref="RouteInfo"/></param>
         /// <returns>
-        /// Returns <see langword="true"/> if both <see cref="RouteInfo"/> objects have the same <see cref="RouteInfo.Name"/> and <see cref="RouteInfo.LrsTypes"/>, 
+        /// Returns <see langword="true"/> if both <see cref="RouteInfo"/> objects have the same <see cref="Name"/> and <see cref="LrsTypes"/>, 
         /// <see langword="false"/> otherwise.
         /// </returns>
         public bool Equals(RouteInfo other)
@@ -116,17 +116,17 @@ namespace Wsdot.Elc.Contracts
 			}
 		}
 
-		/// <summary>
-		/// Compares a <see cref="RouteInfo"/> with another <see cref="object"/>.  If <paramref name="obj"/> is another <see cref="RouteInfo"/>, 
-		/// then comparison is based on <see cref="RouteInfo.Name"/> (case-insensitive) and <see cref="RouteInfo.LrsTypes"/>.  Otherwise <see langword="false"/> is returned.
-		/// </summary>
-		/// <param name="obj">Another object which may or may not be a <see cref="RouteInfo"/>.</param>
-		/// <returns>
-		/// Returns <see langword="false"/> if <paramref name="obj"/> is not a <see cref="RouteInfo"/> object.
-		/// Returns <see langword="true"/> if both <see cref="RouteInfo"/> objects have the same <see cref="RouteInfo.Name"/> and <see cref="RouteInfo.LrsTypes"/>, 
-		/// <see langword="false"/> otherwise.
-		/// </returns>
-		public override bool Equals(object obj)
+        /// <summary>
+        /// Compares a <see cref="RouteInfo"/> with another <see cref="object"/>.  If <paramref name="obj"/> is another <see cref="RouteInfo"/>, 
+        /// then comparison is based on <see cref="Name"/> (case-insensitive) and <see cref="LrsTypes"/>.  Otherwise <see langword="false"/> is returned.
+        /// </summary>
+        /// <param name="obj">Another object which may or may not be a <see cref="RouteInfo"/>.</param>
+        /// <returns>
+        /// Returns <see langword="false"/> if <paramref name="obj"/> is not a <see cref="RouteInfo"/> object.
+        /// Returns <see langword="true"/> if both <see cref="RouteInfo"/> objects have the same <see cref="Name"/> and <see cref="LrsTypes"/>, 
+        /// <see langword="false"/> otherwise.
+        /// </returns>
+        public override bool Equals(object obj)
 		{
 			RouteInfo other = obj as RouteInfo;
 			if (other == null)
@@ -158,13 +158,13 @@ namespace Wsdot.Elc.Contracts
 			return Name != null ? Name.GetHashCode() : "NULL".GetHashCode() ^ LrsTypes.GetHashCode();
 		}
 
-		/// <summary>
-		/// Compares this <see cref="RouteInfo"/> with another.  Comparison results are based first on the <see cref="RouteInfo.Name"/>.
-		/// If the <see cref="RouteInfo.Name"/> values are the same then the <see cref="RouteInfo.LrsTypes"/> are compared.
-		/// </summary>
-		/// <param name="other"></param>
-		/// <returns></returns>
-		public int CompareTo(RouteInfo other)
+        /// <summary>
+        /// Compares this <see cref="RouteInfo"/> with another.  Comparison results are based first on the <see cref="Name"/>.
+        /// If the <see cref="Name"/> values are the same then the <see cref="LrsTypes"/> are compared.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public int CompareTo(RouteInfo other)
 		{
 			if (other == null)
 			{
@@ -198,13 +198,13 @@ namespace Wsdot.Elc.Contracts
 			}
 		}
 
-		/// <summary>
-		/// Compares the <see cref="RouteInfo"/> with another object cast as a <see cref="RouteInfo"/>.
-		/// </summary>
-		/// <param name="obj">Another object</param>
-		/// <returns></returns>
-		/// <seealso cref="RouteInfo.CompareTo(RouteInfo)"/>
-		public int CompareTo(object obj)
+        /// <summary>
+        /// Compares the <see cref="RouteInfo"/> with another object cast as a <see cref="RouteInfo"/>.
+        /// </summary>
+        /// <param name="obj">Another object</param>
+        /// <returns></returns>
+        /// <seealso cref="CompareTo(RouteInfo)"/>
+        public int CompareTo(object obj)
 		{
 			RouteInfo other = obj as RouteInfo;
 			return CompareTo(other);

@@ -73,7 +73,7 @@ namespace Wsdot.Elc.Wrapper
         }
 
         /// <summary>
-        /// Asynchonous alternative to <see cref="ElcWrapper.Routes"/>.
+        /// Asynchonous alternative to <see cref="Routes"/>.
         /// </summary>
         /// <returns></returns>
         public async Task<Dictionary<string, List<RouteInfo>>> GetRoutesAsync()
