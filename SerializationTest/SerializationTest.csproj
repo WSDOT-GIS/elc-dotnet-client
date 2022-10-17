@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net5.0;net48</TargetFrameworks>
+    <TargetFramework>net6.0</TargetFramework>
     <Company>WSDOT</Company>
     <Authors />
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -10,9 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.1.1" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
   </ItemGroup>
 
   <ItemGroup>
