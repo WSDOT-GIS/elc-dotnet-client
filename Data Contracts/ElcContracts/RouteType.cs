@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Wsdot.Elc.Contracts
 {
+    /// <summary>
+    /// Represents different route types
+    /// </summary>
     public enum RouteType
     {
         /// <summary>
