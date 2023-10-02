@@ -14,10 +14,10 @@ namespace Wsdot.Geometry.Contracts
 		[DataMember(Name = "wkid", EmitDefaultValue=false)]
 		public int? Wkid { get; set; }
 
-		/// <summary>
-		/// The well-known text (WKT) associated with the spatial reference system.  This may be omitted if <see cref="SpatialReferenceContract.Wkid"/> is provided.
-		/// </summary>
-		[DataMember(Name = "wkt", EmitDefaultValue = false)]
+        /// <summary>
+        /// The well-known text (WKT) associated with the spatial reference system.  This may be omitted if <see cref="Wkid"/> is provided.
+        /// </summary>
+        [DataMember(Name = "wkt", EmitDefaultValue = false)]
 		public string Wkt { get; set; }
 
 		/// <summary>

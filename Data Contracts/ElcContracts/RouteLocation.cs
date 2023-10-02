@@ -200,16 +200,16 @@ namespace Wsdot.Elc.Contracts
 		[DataMember(EmitDefaultValue = false)]
 		public PointContract EventPoint { get; set; }
 
-		/// <summary>
-		/// The offset distance from the <see cref="RouteLocation.EventPoint"/> to the <see cref="RouteLocation.RouteGeometry"/> point.
-		/// </summary>
-		[DataMember(EmitDefaultValue = false)]
+        /// <summary>
+        /// The offset distance from the <see cref="EventPoint"/> to the <see cref="RouteGeometry"/> point.
+        /// </summary>
+        [DataMember(EmitDefaultValue = false)]
 		public double? Distance { get; set; }
 
-		/// <summary>
-		/// The offset angle from the <see cref="RouteLocation.EventPoint"/> to the <see cref="RouteLocation.RouteGeometry"/> point.
-		/// </summary>
-		[DataMember(EmitDefaultValue = false)]
+        /// <summary>
+        /// The offset angle from the <see cref="EventPoint"/> to the <see cref="RouteGeometry"/> point.
+        /// </summary>
+        [DataMember(EmitDefaultValue = false)]
 		public double? Angle { get; set; }
 
 		/// <summary>
@@ -230,16 +230,15 @@ namespace Wsdot.Elc.Contracts
 			{
 				return null;
 			}
-			DateTime date;
-			if (DateTime.TryParse(dateStr, out date))
-			{
-				return date;
-			}
-			else
-			{
-				return null;
-			}
-		}
+            if (DateTime.TryParse(dateStr, out DateTime date))
+            {
+                return date;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
 		private static string DateToString(DateTime? date)
 		{

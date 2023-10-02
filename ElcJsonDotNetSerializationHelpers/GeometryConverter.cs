@@ -53,8 +53,7 @@ namespace Wsdot.Elc.Serialization
             if (jObject == null) {
                 throw new ArgumentNullException(nameof(jObject));
             }
-            JToken token;
-            return jObject.TryGetValue(name, out token) && token.Type == type;
+            return jObject.TryGetValue(name, out JToken token) && token.Type == type;
         }
 
     }
