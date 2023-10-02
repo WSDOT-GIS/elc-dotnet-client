@@ -214,10 +214,19 @@ namespace Wsdot.Elc.Wrapper
 
         }
 
+        /// <summary>
+        /// Creates a new instance of this class.
+        /// </summary>
+        /// <param name="handler">message handler</param>
         public ElcWrapper(HttpMessageHandler handler) : base(handler)
         {
         }
 
+        /// <summary>
+        /// Creates a new instance of this class
+        /// </summary>
+        /// <param name="handler">message handler</param>
+        /// <param name="disposeHandler">dispose handler</param>
         public ElcWrapper(HttpMessageHandler handler, bool disposeHandler) : base(handler, disposeHandler)
         {
         }
