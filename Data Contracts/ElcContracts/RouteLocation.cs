@@ -230,16 +230,15 @@ namespace Wsdot.Elc.Contracts
 			{
 				return null;
 			}
-			DateTime date;
-			if (DateTime.TryParse(dateStr, out date))
-			{
-				return date;
-			}
-			else
-			{
-				return null;
-			}
-		}
+            if (DateTime.TryParse(dateStr, out DateTime date))
+            {
+                return date;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
 		private static string DateToString(DateTime? date)
 		{

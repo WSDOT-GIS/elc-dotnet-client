@@ -92,7 +92,7 @@ namespace Wsdot.Elc.Wrapper
                 throw new ArgumentNullException(nameof(parameters));
             }
             var count = 0;
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             foreach (var kvp in parameters)
             {
                 if (count > 0)

@@ -50,7 +50,7 @@ namespace WrapperTest
             RouteLocation[] locations = "[{\"Route\":\"005\", \"Arm\": 0, \"EndArm\": 100}]".ToRouteLocations<RouteLocation[]>();
 
             // Get the reference date from the test properties.
-            DateTime referenceDate = new DateTime(2011, 12, 31);
+            DateTime referenceDate = new(2011, 12, 31);
 
             // Get the LRS Year from the test properties.  If an empty string or whitespace, assume null.
             const string lrsYear = "Current";
@@ -176,17 +176,17 @@ namespace WrapperTest
         public void RouteInfoComparisonTest()
         {
             // Create route infos and add them to a list out of order.
-            RouteInfo r101Both = new RouteInfo
+            RouteInfo r101Both = new()
             {
                 Name = "101",
                 LrsTypes = LrsTypes.Both
             };
-            RouteInfo r005Both = new RouteInfo
+            RouteInfo r005Both = new()
             {
                 Name = "005",
                 LrsTypes = LrsTypes.Both
             };
-            RouteInfo r005Inc = new RouteInfo
+            RouteInfo r005Inc = new()
             {
                 Name = "005",
                 LrsTypes = LrsTypes.Increase
@@ -232,7 +232,7 @@ namespace WrapperTest
             var serializer = new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(ElcSettings));
             string json;
             byte[] bytes;
-            using (MemoryStream memStream = new MemoryStream())
+            using (MemoryStream memStream = new())
             {
                 serializer.WriteObject(memStream, settings);
                 bytes = memStream.ToArray();
@@ -242,7 +242,7 @@ namespace WrapperTest
 
 
             // Serialize using both built-in and JSON.NET and compare results.
-            using (MemoryStream memStream = new MemoryStream(bytes))
+            using (MemoryStream memStream = new(bytes))
             {
                 settings = (ElcSettings)serializer.ReadObject(memStream);
             }

@@ -44,9 +44,9 @@ FU Future";
         /// <summary>
         /// Matches a State Route ID and captures the SR, RRT, and RRQ.  Also matches an SR without an RRT or RRQ.
         /// </summary>
-        private static readonly Regex _srRegex = new Regex(@"(?<sr>\d{3})(?:(?<rrt>[A-Za-z0-9]{2})(?<rrq>[A-Za-z0-9]{0,6}))?");
-        private static readonly Regex _numericRrqRe = new Regex(@"([FC][DI])|(LX)|(RL)|([PQRS][1-9U])", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
-        private static readonly Regex _mileageRe = new Regex(@"^(\d+)(B)?", RegexOptions.IgnoreCase);
+        private static readonly Regex _srRegex = new(@"(?<sr>\d{3})(?:(?<rrt>[A-Za-z0-9]{2})(?<rrq>[A-Za-z0-9]{0,6}))?");
+        private static readonly Regex _numericRrqRe = new(@"([FC][DI])|(LX)|(RL)|([PQRS][1-9U])", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+        private static readonly Regex _mileageRe = new(@"^(\d+)(B)?", RegexOptions.IgnoreCase);
 
         private static RrtDict _rrtDescriptions;
 
@@ -130,11 +130,10 @@ FU Future";
         public static Dictionary<string, Dictionary<string, List<string>>> CategorizeRoutes(this IEnumerable<string> routes)
         {
             var output = new Dictionary<string, Dictionary<string, List<string>>>();
-            string sr, rrt, rrq;
 
             foreach (string route in routes)
             {
-                if (route.TryParse(out sr, out rrt, out rrq))
+                if (route.TryParse(out string sr, out string rrt, out string rrq))
                 {
                     // Get the dictionary keyed by SR.
                     Dictionary<string, List<string>> rrtDict;
@@ -181,7 +180,7 @@ FU Future";
         /// </returns>
         public static string GetRrtDescription(this string rrt)
         {
-            if (string.IsNullOrEmpty(rrt) || string.Compare(rrt, "ML", StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.IsNullOrEmpty(rrt) || string.Equals(rrt, "ML", StringComparison.OrdinalIgnoreCase))
             {
                 return "Mainline";
             }

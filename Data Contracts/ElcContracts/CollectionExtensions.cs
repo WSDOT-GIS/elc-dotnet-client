@@ -47,8 +47,8 @@ namespace Wsdot.Elc.Contracts
 		public static void AddRouteLocationData(this IDict dictionary,
 			RouteLocation routeLocation)
 		{
-			if (dictionary == null) throw new ArgumentNullException("dictionary");
-			if (routeLocation == null) throw new ArgumentNullException("routeLocation");
+			if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
+			if (routeLocation == null) throw new ArgumentNullException(nameof(routeLocation));
 
 			// TODO: do without reflection.
 			var properties = from p in typeof(RouteLocation).GetRuntimeProperties()
@@ -74,8 +74,8 @@ namespace Wsdot.Elc.Contracts
 		/// <returns></returns>
 		public static string CreateUniqueKey<T>(this IDictionary<string, T> dictionary, string keyCandidate)
 		{
-			if (dictionary == null) throw new ArgumentNullException("dictionary");
-			if (keyCandidate == null) throw new ArgumentNullException("keyCandidate");
+			if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
+			if (keyCandidate == null) throw new ArgumentNullException(nameof(keyCandidate));
 
 			string output = keyCandidate;
 			int i = 0;

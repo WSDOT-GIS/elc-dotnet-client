@@ -1,21 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data Contracts", "Data Contracts", "{93630D78-4ACC-4107-BF83-40BCB46B0709}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElcContracts", "Data Contracts\ElcContracts\ElcContracts.csproj", "{0EB140C4-9309-4E94-A784-165D1015A338}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElcContracts", "Data Contracts\ElcContracts\ElcContracts.csproj", "{0EB140C4-9309-4E94-A784-165D1015A338}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeometryContracts", "Data Contracts\GeometryContracts\GeometryContracts.csproj", "{4E16A68F-DE12-45DF-AB7A-61A31E946B02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometryContracts", "Data Contracts\GeometryContracts\GeometryContracts.csproj", "{4E16A68F-DE12-45DF-AB7A-61A31E946B02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElcJsonDotNetSerializationHelpers", "ElcJsonDotNetSerializationHelpers\ElcJsonDotNetSerializationHelpers.csproj", "{2D512196-D866-41EA-B3AE-15C1554D1E2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElcJsonDotNetSerializationHelpers", "ElcJsonDotNetSerializationHelpers\ElcJsonDotNetSerializationHelpers.csproj", "{2D512196-D866-41EA-B3AE-15C1554D1E2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElcRestSoeWrapper", "ElcRestSoeWrapper\ElcRestSoeWrapper.csproj", "{77700148-D912-4FA4-80F7-23FE755815D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElcRestSoeWrapper", "ElcRestSoeWrapper\ElcRestSoeWrapper.csproj", "{77700148-D912-4FA4-80F7-23FE755815D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializationTest", "SerializationTest\SerializationTest.csproj", "{FB31EED8-E313-400D-9695-EFD7750E006A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SerializationTest", "SerializationTest\SerializationTest.csproj", "{FB31EED8-E313-400D-9695-EFD7750E006A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WrapperTest", "WrapperTest\WrapperTest.csproj", "{140AE44A-1909-457E-BBB0-00154FA23F55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WrapperTest", "WrapperTest\WrapperTest.csproj", "{140AE44A-1909-457E-BBB0-00154FA23F55}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FC773592-35F2-4737-AF61-198FEF838CFF}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,9 +30,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0EB140C4-9309-4E94-A784-165D1015A338}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -102,6 +104,9 @@ Global
 		{140AE44A-1909-457E-BBB0-00154FA23F55}.Release|x64.Build.0 = Release|Any CPU
 		{140AE44A-1909-457E-BBB0-00154FA23F55}.Release|x86.ActiveCfg = Release|Any CPU
 		{140AE44A-1909-457E-BBB0-00154FA23F55}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0EB140C4-9309-4E94-A784-165D1015A338} = {93630D78-4ACC-4107-BF83-40BCB46B0709}

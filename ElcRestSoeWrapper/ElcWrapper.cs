@@ -91,7 +91,7 @@ namespace Wsdot.Elc.Wrapper
 
         private async Task<Dictionary<string, List<RouteInfo>>> GetRouteDict()
         {
-            UriBuilder uriB = new UriBuilder(string.Format("{0}/{1}", Url, RoutesResoureName))
+            UriBuilder uriB = new(string.Format("{0}/{1}", Url, RoutesResoureName))
             {
                 Query = "f=json"
             };
@@ -377,7 +377,7 @@ namespace Wsdot.Elc.Wrapper
                 parameters.Add("routeFilter", routeFilter);
             }
 
-            UriBuilder builder = new UriBuilder(Url + "/" + FindNearestRouteLocationsOperationName);
+            UriBuilder builder = new(Url + "/" + FindNearestRouteLocationsOperationName);
 
             RouteLocation[] routeLocations = null;
 
@@ -422,7 +422,7 @@ namespace Wsdot.Elc.Wrapper
 
             if ((routeInfo.LrsTypes & LrsTypes.Increase) == LrsTypes.Increase)
             {
-                var layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Increase", StringComparison.OrdinalIgnoreCase) == 0);
+                var layerInfo = subLayers.FirstOrDefault(l => string.Equals(l.Name, "Increase", StringComparison.OrdinalIgnoreCase));
                 if (layerInfo != null)
                 {
                     string url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
@@ -435,7 +435,7 @@ namespace Wsdot.Elc.Wrapper
             }
             if ((routeInfo.LrsTypes & LrsTypes.Decrease) == LrsTypes.Decrease)
             {
-                var layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Decrease", StringComparison.OrdinalIgnoreCase) == 0);
+                var layerInfo = subLayers.FirstOrDefault(l => string.Equals(l.Name, "Decrease", StringComparison.OrdinalIgnoreCase));
                 if (layerInfo != null)
                 {
                     string url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
@@ -448,7 +448,7 @@ namespace Wsdot.Elc.Wrapper
             }
             if ((routeInfo.LrsTypes & LrsTypes.Ramp) == LrsTypes.Ramp)
             {
-                var layerInfo = subLayers.FirstOrDefault(l => string.Compare(l.Name, "Ramp", StringComparison.OrdinalIgnoreCase) == 0);
+                var layerInfo = subLayers.FirstOrDefault(l => string.Equals(l.Name, "Ramp", StringComparison.OrdinalIgnoreCase));
                 if (layerInfo != null)
                 {
                     string url = string.Format(fmt, layerInfo.Id, routeInfo.Name);
